@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>QNA Demo</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="embedContainer" />
+
+  <script>
+
+    // Get data required for embedding
+    var datasetId = "9106d3bd-3e1e-49c8-a31b-33f65fc5efe6";
+    var embedUrl = "https://app.powerbi.com/qnaEmbed?groupId=4baab6c0-87c5-4a2a-a73e-1f97adcc6bdb";
+    var accessToken = "H4sIAAAAAAAEAB2Wtw60CBKE3-VPWQnvVtoA770nw9sBBg-ne_ebvbyC7k_V1fWfP3b2jHNW_vn7D2emmfkNvS3eBUuhfAsVYoqQvz1FVbWd9SpWWMGhFUVCZRn3_ThiCRaw_GxYDs5f53qJndav6hH2nCQj-kIbGQw2FPUmjj77QK-VZ4j1wirQhrP2b-E7qZjWi9NOqBJZUur7IaHgFKat2C1xriPBMUVtqai3NEIX4LyZGUtZsXwuSh1eMReUPYker9-ukwsS009uvD0QYP4jQygIb3L7QLu20cdxq5C-4KkCEg9ecY2dqBNcoHgeRqArfXFwmKdAqd_oq0s0RhqMCmrwZ4t-EjHdiyqGz4aU6J1YWEi5r3MJYSMUqTPdb29BzUT3NTuG4Ptw0iOwlNGzWhQDBMEp4MOxnUsM-bJf9eXQMnZQnycWq6AfGVawREWDkeKV3RmImiytJcYqidABnN2nQ902grI9YDNqDu2gEidXfRNBcb_dhmyjyzLcb-Uqeo50ey3NGEiZomxexeDWCNdNdyLphOKj8Cgq2es4WJUoWzFPb88bWwZmloHVu6VdNVNpzXl6lzYjZ9FBYoSzScmmr2WioI2jVYspspMEQvKkOilCy5F4H08PZRla97aNsMJjiQj8Fc56sUQr9Q3pYZx0vZRNnOIdCBidWm4PfDPbcVMjO0FtgGsi549-J4aZUWpSr9FA6KqJL4GLgH1uSdDJahtZN9NNSdNxlAHY-Fx7aEX8O0BQWYKYAXJnuDsn_gTSy_Gfxv94IHpPGkBZhsRU5bc6ZF8BNS4a-Ch2VLhG4nG50A0qKBmsek1LbSd_-VmZFpW_U0jK94Xr8B7HgyGrKD6yf0ZuB_cjprrHlz4KKt8j5LazJezpACdk_xzkEe8ZyCy7ub1LyvFCuL3mSRXAkKmWvN_l08JzW0b8enmXdLyf1GJMVR2LePtqOBZFi3x6D5Hk7gmcrVn7Nk6V7uqVWL2Aclcm0jqCh9yzWv7dAS9wXoslUndSZzJhGVKN5rP7pkobeHjaEaCvf--GyupZhr5NMntEJ_JbuUtj2-EKiK6D3kGcLoVvVnswRnI5OxxdHL1QhEbijBgNVIoFV-P3Kgu6E5UL8boMis40GwyU5yBUV5Z8QUlaAHTpiClkAb5LeH_ftJ-sxYhCW9nVKFcu4p2q3dt3Xjs5oMUBppeeVsgZwJ1BmO6fR9wTdGvQCy1lQbnbB8Yt9-TNTFC-fB6RiGA2u73OlfKqGp42E6-JdvIkeSchYNl56WX6MnXDztxOzsW6bibiwEyhK1nJSMSYGwa8kmk_XY4C1IYHJgXtIVFWgem5c6kwuCqRPIvgIDbSdnyG2IgcQbT3KxsQQYJHQm8vTpIjW4xpwsx382WSn9GukRqla49RM5TU9z4lXa4GLgAxBjgGtI7AHfE1rSH7onQTuys11dR5vncX6lMhYNOrjblM36MYLWFfiTQ776AmZKwfFsN01HA6viIpE5B0CsKgnvd586WhT0hFzGoZZw7wQgdwRN9DnR_sFX1PCvjzYMcwHG80Fq3G2VlDmA6vhzMkn2blFyrocPbTaDqP_lG_w2nrS82Ra4QdoD7qNtM3SD1YR_H16QOOcOdNP3iHVLeCnGfSE0y5qYHGKyQw2OIaUIQhnrgkDJnL5yhdWW8dNf42jEq48bQHLK_WZZMNsixd6BOjFuZYwZcvG9RvsxPbu9JRidrr2fRifM5Up0QFSHqDwvd4ENnogHpSJW0kLeOprKmBnMImk7YaiDHwPrBON2wDM_pLOs_PG0Ke79rE4I_rCofWWkpIBonVPj8GqOig0GpcwtIs74BMO4NA0mpI4tNCY3JgVVxHiQjN6CyVW3FokE2y3zZyWslyP0uFrpctx0SqjSXRfqTLYlQphVF8h0QKqrTot8V-Htt4ImVJoxCmXc3wXo6cfpjagnClly5Xv-yo2tt3wLzPijjJEoERvWdfJOR6AAbtYmKwkBEBMhGzBP5EOXeOk56OurJvSRIKYp0TvtHtJZUYkhDsuuGJVT-vr8ZbLD0yixuwGUn7SsrI4fyy1fVRjzL43bmYKIQr1yR3yQNyN2MkJrEQL48GnrsmhzTJ5vI3WOow72epP_ZCxxiWIrg_f_3h1mfZZ616fnUgyTyGQdg9t-XamBMHXCfvlwYm4GfKGc2Ixcp2GeqgmerX2lo86I-ZxHpPogWzLzQsCz-FQDHNPTdAaIhZwNcXWhdt8ln6xXE2VgdGDYge5D46hRot6Pc6v-Dm4xzoezVtWq8YgxnVfDkBoIxX4nhA1XQHDAIFhOgRhXeCjSUxozdpmx18c19qvdZSLpSbb-hKYHEasw95bNgfvqbMDnZrO1k78BG7dc8BDqIKEoWheA-1OaV6ZKSwbyjjvbI5iMKj722vVXVgKIsYj6HEKjnfv324aNUQPwDiGVIvs1EoyhplL5kCedkiy_2j3g6gTs-OPpR9jD4pgD3yGznAaG-53Oaff_7F_CxttSrhjzJWcC61K17heTeAhpLZAEZ2_V_ldc2U7cda_WQD7q2d7z1AH-SI2elTGx-7Rutra-dSVhEcie8PuH6tERPzJQmY5mpAoP01HeM8VFngDOjTujvtkaFzNLK8xtAU0B-Cb3R1jydh-myv_EOoVZ8GknMtMaxJErICshKKpTcrYGKgapDM3M0g-z4g9I1nx9psX3MaVq4U982hz012mp1qvTEJ8ri7ip3wXsKfDg8tpsoKn7A2Qp_3RyLeGidUpDSo6-_pm9l0GYDeeUkXjz53YCoaP5P8fPDLABMFmXQBR3oVxz9u6G6hrZk464Of5VjalwVuajBCMEw5JhD3xsNOcf4Ygm_nOZR4-XkNvyjXv2iJrAE4x93lzbiBEWE_Gca_mP_7PyA9QikCCwAA";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'qna',
+      tokenType: models.TokenType.Embed,
+      accessToken: accessToken,
+      embedUrl: embedUrl ,
+      datasetIds: [ datasetId ],
+      viewMode: models.QnaMode.Interactive
+      //,  question: "What is sales revenue by quarter and sales region as stacked area chart"
+    };
+
+    console.log(config);
+
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var embeddedObject = powerbi.embed(embedContainer, config);
+    
+
+    
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

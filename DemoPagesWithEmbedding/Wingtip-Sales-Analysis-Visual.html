@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Wingtip Sales Analysis</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="embedContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "f10c9de9-a325-4a43-af9f-0cf35cca2ab7";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=f10c9de9-a325-4a43-af9f-0cf35cca2ab7&groupId=4baab6c0-87c5-4a2a-a73e-1f97adcc6bdb";
+    var accessToken = "H4sIAAAAAAAEAB2WxwrshhJE_-VuZVBOBi-UcxhlaaeccxrJvH9_g_dF0xTVp-vfP3b6DHNa_Pn7j7fBIWPwF0b73vN8RLAe0QorRwnlZ85sblNSXRjoiNpxOdkPpLovS73BVUPFLOrmb8FYW8GjOQhTXgaaO0Rji7ujMnIlvmORs4tdrm8T7JfkdlHKqDoG4GqXw-BtZzTYlHCxaQPd4hvQjQmI9CJSfaBM45uCJBcOanhKm_0yxDryI89wUI0PW_SD7_mYJLmAWtvckCbSKW8LwqAyyaiA3QAIkSn60rwuQqR6pylo2WSi4FYAMo-F1EJ-pHhzGYEZtT7F0zZLZH42baLXjx59131Oxxmb3MgqQVt5D1b17bOtTcPtCW2nbyJhgGXSY31w6PCpJEKKx8a6bOx9xX5uNL19uxkcK85ZeY-UbdqMYxloeN7dlmOAAWm1DzCCcgFcznHpRj8lPbSM922fKnjj1ncaJGC91rx8QPe1B4t4ZRStv1ubacHKy2VbZCW0NxHpOq25FhW8THAquetcdIJDZuREGbT7InI41Suw9XUa0bFJJLHzvga8uIQKq8rcymuGlQMVfINI8laU1smvcIhIKWQy6Gm9STYQNMNAoRESfZ6pyMxjevXDDLC8QSvg8YW4OKo2EH91DJvI5lT41LIH9C4Wy4ymgh5EJE2XZL6LN9KgbhpzxQPKpLGVZzKGe6t3VsLLpJ7QHjI87ZJSkrQRQBlzVIyYgcyAxx_IWYynHCzJpkwBLIRCyRcCNKvrF-Lh74vM6oZgXsyEOxAX9Peu6AS828lWQPGZePDSpZl1LrAASzPF8owl3dOqZP7EUV6NVE3ejcuLIZWsS8-QIIybaCJzIlZvYlu7zNNBhGjwOYQ69q2KeKFzWjQXJOpNVF0jTIl7Ch2XcnLp5pphGBlnpcZ86yuM1ZiY7jXQmbRI57SpJ1_GvxUCQd46uSq2jllaicheU00sjztTI4NcfFmXfA1xkprJAwTNVFVvjqRIeqIKtS3bY4YYN7EMls7VVp_i9M6jOtiKl9423ZAiWzWiLLcYFubq7l5oa61C6cwCUCvKC4w4CusQ1xV6LcQXGJPXyWRRrvPETq8dmbqzv7mpY2ekE4GwtxverxAmBNxQsWaAO_NirqtcYizai544DLztTRcZoVuzhc9EPpSoCSxCsSgEFg3xl0xik97NvheMjAGQR_bBeIyJ56S4OWgA8R0TUNpwDrbwC3yZa8E9tB-ui9GAGw85m1OIY5uXQwfKZl-wE6dtcIJ1W1b6xh_i3JIDwIGwpNCwSpg_bip-WYoAbWBI_Ob4vC6s4S8sANkTHRARb2AafD-4zs3OfSQRPp-qoqXGU3TYglFFAr9Q3A1wju8WUFYoG34WvXf0KpcNYR6VEN1dUSsqxG3nhziww4NUt08aQKfr6GxEQXHtG-5r-CAOkRyDCp1LHOKwiVkaOgSxIAQ_qJOo8bDwkNZzUKr7kKmWEIRtPSjmNu6tBUXWsB0PHhw09ka9qEw8kNhcVL6R9qcYH2m8IE5LbLjrOTG4aS__-opt8x523pGgKrfe0EZI5HDztPqp6mHh8LiilmtrAZGbgAW23wfrIBtQUhKu5TMw8FZ24T1BvCAVGYpVVwuAWkP0NaRtN-c3tumoCypT71n_mwwGseVGINjwF7bPi0rFg9TAj0iQi9Xg6JpKUjg8ro88kW2K0VJW_aqdF_KbkuAfXM5w1LrTbhIB-FpHVLZZEcxtUDLZopWBNJ-6lCM0wCaN4JUkmQCiuYvBgY-YIFwU6_2wmiNZnAvnZ_q4ZNWfvvUA303d-S8bE0hmWsPVx4nGV9RSxAU--XfakJOUo0UPSyr4gfWrojqIkLFvFeec6vTjY5MV53-XVJZHAJdFS-yR0X01g8yKWzfT_QQzX44YREjQvsoWjmWZ9ClCZ7GTLDfmwy_bREzWuE0RTKidwhaihAPNeLNaLuulOPhUkyxxNAhCafolcEpVk1TQ-y2g4i_c_j6d6KZeCx1ixZHJNiTjWua-2ItmOFA0S59F63xu8kKGr2Avi1KbkYLtq-TS6ZoFnPy4DkvTq63hWhIxfvo5ftc2IsGyJbfoNkPy5C3qzcEzE95JdAkSwEls-YjnLEDiLbRH1gnZ2OMcXzzyqWhnBng_-rY7jThC0fV9A6vTSS7zP3_--sNtz3LMWvn8qoMo6i7ebfAra7Je6-snP4wv227qg9Pvy3LE4TqGFjsg1WDbtjd3d_Khar-4_-NRrlZ2ItIV0Bz571EV1dlnSTxw1PvDLQe53Wns6O7EAJTlxKtk7CGUbCOX3WFuFg8S7D239FZOq76fUHGcapv-QJW57PLbMMit6bUNpr5DfyT4KTUFZcIVuckVMfF2wBKPcHfWeU_qulyqEmZBiwtwYU9UxZO1aVVVYVgbLuu-vcOPM5LGu6PUTWOBhe1x5gd43_6Xv0Y7-6RHgb50Shk0B5nxE6ietcidAkZMUCnCR71XA3uAqv5l6RDK-o5PZQHNb9-4cILn1ZOlLEFWyJNtKZ5i6n_-s_lZmnJTgp_LnG9ML1joKI58ZNpgThpwpc9_Kretp_Q4t_InS6CC4EuC4Zuu2V0Wmku37Vu7_hD2gAVRo-W-_k4REVxOSM8zRWfdSDxfKEWjJQPvgqyEa-moQIKcBl8m5BRPaNA_anP0CqZfZsZp6plpIGt6Qr7hH0C42A3biQpESwQFLyLcY9U1Vb_QFkjRWm_78QblnBRAjvBtdJvQEJK_PSooZVipdVLjj1gweZisiFTwUQogvmTtnjrDt78G8oMBfGTKpZLaa6sNhmsILqGKd8WK2OiD5s2rtSZ0xpeCcbbOUS5bzfUX7L4Hk33CGyZTViF1QqhwEG0-Ens6X_M5yQZ91MJ0x2sFVEYnYF5BE3jtCMPFjo-y5x2GDTV8dY_g953P_Gz-3_8BR-et8i4LAAA=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        layoutType: models.LayoutType.Custom,
+        customLayout: {
+          pageSize: {
+            type: models.PageSizeType.Custom,
+            width: 1600,
+            height: 1200
+          },
+          displayOption: models.DisplayOption.FitToPage,
+          pagesLayout: {
+            "ReportSection1": {
+              visualsLayout: {
+                "34c865fea673987e1a7d": { x:0, y:0,   width:1200, height: 600 },
+                "VisualContainer3": { x:0, y:600, width:1200, height: 600 },
+                "00f34230875fd8a34ff6": { displayState: { mode: models.VisualContainerDisplayMode.Hidden } },
+                "db6fd7b5f2991c9f2580":     { displayState: { mode: models.VisualContainerDisplayMode.Hidden } }
+              }
+            }
+          }
+        }
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+  
+
+
+    // code to resize the reportContainer to the size of the hosting browser window.
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 12;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

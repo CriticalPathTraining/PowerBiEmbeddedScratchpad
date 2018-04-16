@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Wingtip Sales Analysis - Phased Loading</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="embedContainer" />
+
+  <script>
+
+
+    // preload preload pbie scripts on this page
+    var preloadConfig = {
+      type: 'report',
+      baseUrl: 'https://embedded.powerbi.com/reportEmbed',
+    };
+
+    var preloadElement = powerbi.preload(preloadConfig);
+
+    preloadElement.onload(function () {
+      console.log("pbie scripts now preloaded into this page");
+    });
+
+
+    // data required for embedding Power BI report
+    var embedReportId = "f10c9de9-a325-4a43-af9f-0cf35cca2ab7";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=f10c9de9-a325-4a43-af9f-0cf35cca2ab7&groupId=4baab6c0-87c5-4a2a-a73e-1f97adcc6bdb";
+    var accessToken = "H4sIAAAAAAAEACWWxQ70iBGE3-W_OpKZIu3BNGb2mG5mZnaUd89k996Hhuqq7z9_rOTppyT_8-8_PV3mEuQTa6XWwwi85FpiJwDXTou61edmTZFuY7ezKQFnJ3JVCEpjlzHiBD_-HBISoFC3HrP9qeJFBqUqqEor24g4TAGCyaE658W5ikOvKdNUiGB6cdwzQCtWEhAaq98QRXExw7oGPWiTxDRXm6yAzili2sHD5_JYtso28K12BE7kcHgB9KfJjT6rqxnzUWTwJozstiu3Un18ZktO90lrNHzs86y_2tt8v6NWvcosVPlwMoEHoE3vlbt-IRRscLvfpN01cWBJEXm_e_sYW-isFB83tSIbfszCLRmiPCyLgUPFgTN5gUbLxb89SKidmbIOlwTVu408KIjAF36-w_P2MWliKHVGoBoL3UwiEFXY6K0Q4YKpRztYU12Vj91Bfv_lZ0aeCXKjlu93K22_tmmUnDPsWwVIVMc82hMdv7ERxgl5NxGuU3VTUV8pv2VaAHBx8K4s2A5lc8Q7fLjRYJsaewuQVct8vb6QfF9NW5fGB5s8KwUiMAuk5fQ-klZVEQ9G4tteT1HtO6O1uaOTIsN-u-sZfEa51w0ge3iB6mXS17BWaNXFrdaO_DMEO-rzCAPXSrD4iZrDH2XKnjwt27NSHFP46ZTV29NkB4Tuy5ajzffb7Ru9eIfzMAEwS6QBo01l-bk6FC65Lz3doUPfFrrsjJ4kyg1SbE0yABEwpX6K5xE-ExF36qcQpWgT5XCrRKYODAnYIXpvrfKarfxrcInfVIPntUbT5eX2KTMhle3CZffKYWJ846iBnD5zvXcf6YNB7BKhtQNVia-kXWHvXv80beVsjaY3LUIVSJPhU-5p5UhrL5tjxvW4i11LDBGDPeY9ORARXQV32sZLLDxNHwMInmIZPnUYdXAyJVAnwsJJp3WQP1R74fEOZCZAF6ehet9XmlWAPJed626Euo7VwocXmkUZ3H083cPzuEtmPIIz6oTMKNARBMLDZSpoe6meJaXYZu5yCsXL_lI1nMPwcwpaKV4XlBauWk_DpuI9GWzPqhwSYUXy2fLLOHpFs4vCm6qewuqTBSPGvNy6Y2qiYgLiahzixfcaDPoEPC0-2I13Gr5kd-wa4hLy3oi_N2nTB6DenNLdL-g1c3nTc3_j9eGShrSY-EIgYSk_z6NwyKSLqP9V5IVbg2vOrY5zj8zwzSMw5U5dmN3TrSJGkwNK27Bi63RgdU5tWR_tDc13uU3IxuJtv5hH-W0RzPrAq5dCZn4RF1OGfVZL8D-NR3ShpOt3WERFhlankFOxxDm33Cv23ZqjYC9I2FONirwXHJDLmmxtoD0EQD0NMgUUcwow5Jt1UIsh43NaNFHrM-QqPrEk-ng1HJivmTWkS3xKI0kY5PCGMVzOXp7spS7X4MuLWAg3yawDPkltGyyIIdJpXQCObDaluNuM8W9CnoKeXIbrZH5IF2MQ5SJielK3rz5wGLwOjjfpPkC3XohRb_SpejqhgkQAhbD7mY6tGFzBIdezqjSJ6JkGMcrDvZZ4O5vVVnQYPnfuzub75BfF9o1DyK23ZfQgCbpEGJaMOKbVW7R0YIjIbbFPBY4SA0GFRq7aneCETVxTP7VA8Vk3nJl2ywCHNXFyg8HlOwpGTFDkmZ0xMYCn-jZ5fRsYRNFS1hmwzW9AI5PSQ260lR5HamHSsOnLgJltbYXuQHmDmrc-dvGTa8GOGxNtxUjKxHpd2tOjxceqrFS_VHy3PYLD63KqW1x0nu18xXlNQqTjk8jUuTGsG21SI-3vKUzSfdvvgb_yKs_GXrHqAe8Be3nhNle4i6YrSUk8tSCqpu9Pe0Y1hM11_vF1UGASkogS2-mgvSule9mB5ot996Tlgmm851y3fK6adOx2omJgZHNFq60eNe02vJqBKkkfarrcj6k6CpRlhpXGr1OXKF7Kq-e1e2vDIdUgp3cGfFsTUkg0saaGvkd-o2f0FcVQpvtTJZB1NrdICZJrP8ejHYM8v76h9UuNLcyj6bhY3GTsXqYPL-hxX5s-EDTfQTYqG2Zgyob_RAummUULXG3h1srK6tnkJ1kTT277mwjyglaYYWqnfbZ5x8AubpNecJhbzdI9l7F-necm9TngXj_VJlxhpyjYOn--9186ahdV45wf5TGGMTYxwNN2XjrKyP67LdySJBxbCp2NtxvRCXyKvw2wGFn1119__vWHW595n9Ti-WEGJ7HCa6YRpdKLOO5hE_EcqvzOnnEpszL5umF2aondS4BJ0XzeSz_ODj0gVwiSqj1_8OCfHWj0Qc6cWhPSzNdCyrifoj7TbTcAqpYu2E7TNAa9uv3cf36YvTjlCC3xTJErDeVQj2Udl4Hs4nzg_mhGr0kQh47Wn7DQ2cswF9tBx_rayWAFFjqUDMYoW-hUBQl5-7WGZ6YnHQGj7_v6E3X2Q4pNmn_6ZHEP97ZwyarLW3UOPUYRNkyaFz6p82lXecS0dIFUE-Qzma7fw7C-7xEmfjYUQz-IcD0cWQQdbMqXCunXOTfqupf0_bFZzpjkE-oEMMjMuVICYTKrmab_soJTjtT-Z83PXBer7P-27IZi8n7jkRcGZwNzs6adpWP-rnKbakz2Yy1-ZfpD5gorIttDD-MI51g6ZEunPyZ1uAl1kxPlAD-EKg3vEdgtzVL0AATbxE980Nk8YwClg_gatvFBXbJyT9AYVCgRk58Zh6pQXiUT4SYeN31to_1QCnzYk0YmF-JjCVUFi2DKc7KmyvtKQu4JFuamDPiScFNKMAD7iH5eoILYKdLLsrJuLRPKlxx0mXH0rkqDR_wQ-AhwRG6zlfmjRZ7h8wGVI_1ksIyZljhTISlKvrm3aVChkKWOTx-AgZLLm9FCQWV-kAkq_yAmkWEaJYwfzlAgd5L3G4nHHx3c1MbBw_UwxHDLyh2zittR2966ECW6GvIh4Z8tD5YPXQVV-zOO0G3T_F_z__0fh5llEloLAAA=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('embedContainer');
+
+    // call load() instead of embed() to load the report while delaying the rendering process
+    var report = powerbi.load(embedContainer, config);
+
+    // when loaded event occurs, set current page then call render()
+    report.on("loaded", function () {
+      console.log("loaded event is executing");
+      var pages = report.getPages().then(
+        function (pages) {
+          reportPages = pages;
+          console.log("GetPages callback is executing");
+          // load first page in report
+          var activePage = pages[0];
+          currentPage = activePage;
+          var noOp = function () { };
+          console.log("Set active page");
+          activePage.setActive().then(noOp, noOp);
+          console.log("Call report.render() to display report");
+          report.render(config);
+        });
+    });
+
+    report.on('rendered', function () {
+      console.log("rendered event is executing");
+    });
+
+
+
+
+    // code to resize the reportContainer to the size of the hosting browser window.
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 12;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>
