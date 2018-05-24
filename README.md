@@ -39,5 +39,4 @@ https://github.com/CriticalPathTraining/PowerBiEmbeddedScratchpad/archive/master
 ---
 ## Related Power BI Embedding Demos
 
-
-Link	[DailyReporterPro](https://github.com/CriticalPathTraining/DailyReporterPro)
+	[DailyReporterPro](https://github.com/CriticalPathTraining/DailyReporterPro)
