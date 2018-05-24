@@ -38,5 +38,4 @@ https://github.com/CriticalPathTraining/PowerBiEmbeddedScratchpad/archive/master
 
 ---
 ## Related Power BI Embedding Demos
-
-	[DailyReporterPro](https://github.com/CriticalPathTraining/DailyReporterPro)
+The **[DailyReporterPro](https://github.com/CriticalPathTraining/DailyReporterPro)** sample application demonstrates an application you would create for real customers. It demonstrates how to embed Power BI reports and dashboards in an ASP.NET MVC application and shows how to take advantage of advanced Power BI embedding features such as allowing users to edit existing reports and to create new reports onexisting dataset.
