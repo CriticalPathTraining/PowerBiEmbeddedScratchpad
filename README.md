@@ -18,7 +18,7 @@
 4. Use the address bar to determine the GIUDs for the Dashboard
 5. Record these GUIDs in Notepad so you can add them to the sample app
 
-### (C) Create a new Azure AD applicationin the Azure portal 
+### (C) Create a new Azure AD application in the Azure portal 
 1.	Create a new application as a Native app and use a reply URL of https://localhost/app1234
 2.	Configure the app with Power BI API permissions – give the app all delegated permissions to Power BI
 3.	Click Grant Permissions to grant user consent
