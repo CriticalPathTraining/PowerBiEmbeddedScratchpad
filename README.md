@@ -36,7 +36,8 @@ https://github.com/CriticalPathTraining/PowerBiEmbeddedScratchpad/archive/master
 7.	You should see a page that embeds a simple report.
 8.  Experiment by uncommenting other methods in **progam.cs** and examinng the JavaScript programming used to acheive various techniques. 
 
-## Related demos
+---
+## Related Power BI Embedding Demos
 
 
 Link	[DailyReporterPro](https://github.com/CriticalPathTraining/DailyReporterPro)
