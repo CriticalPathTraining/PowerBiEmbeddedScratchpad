@@ -30,7 +30,7 @@ https://github.com/CriticalPathTraining/PowerBiEmbeddedScratchpad/archive/master
 
 2. Open the PowerBiEmbeddedScratchpad sample application in Visual Studio 2017
 3. Open **app.config**.
-4. Enter the values for ID settings using the UIDs you copied into Notepad. 
+4. Enter the values for ID settings using the GUIDs you copied into Notepad. 
 5. Open program.cs. The first method should be uncommented
 6.	Run project by pressing **{F5}**.
 7.	You should see a page that embeds a simple report.
