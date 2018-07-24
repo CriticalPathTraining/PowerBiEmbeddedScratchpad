@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo03: Report Toolbar</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="toolbar">
+    <button type="button" id="toggleEdit" style="font-size:14px">Toggle Edit Mode</button>
+    <button type="button" id="fullScreen" style="font-size:14px">Full Screen</button>
+    <button type="button" id="print" style="font-size:14px">Print</button>
+  </div>
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEAB2Wtw60hhaE3-VvsUROllyQl5xhoSPnnLHuu9-V-ylG3zmjmX__WMnTT0n-5-8_mksRG4jkDmlGwZxdsQ17_BFJ64C_8EfikGW538LHqZ0aFHc2IVSTE6-lKdNqcuJUxMVmad9LlT0nZ0F_r6Up0znqz8mLn6fhdktVp--3rjZCy9UGeZrsSJCNF6OzJZWgMqviHsqc_mQadFUGtn8uRIsJYuQ3gt6LDSDONTxDGZNoB46Gw0F5_JIAbj_3pb1oYqW1j1J7YIGZnogD5hWQnikZ88Ye7w7MsiOXHMIWuru242d0EwxFdWo5RqVUBwOLEZ_hIzpwHil3Iq7NEHorN-JSRKC1J_l-20K5s-XU-8bvl7OkBaaE6rIKd7sjqSmKaPt-n2xVMTJYsstBvtyN1JvNbFFonK_cX6fq3ftaJSyF9UVEo2MaXCZGVS_D-hPXlYg4jqXXOMSXyev509mPuiLC2sCRzz5Z39A30u6eTEFIxADPixtI8K4AbRDolm0L7mQzVYye_sHppz4nJixWPXRRF2MCpxkr4aZv91Ft0hrt73MyPc4xXVZQAUGiJuYxSwTuPYH6Ppx3Xs31yFPMEle5EniI7fKyd17i-oelJJokpaI9Ajbj9D5u3KgGhuw7bfS8PxxyqLj52KBgwAA07znALo20L5NnBIjobjrETXOvq7ZO3zVEg5JgxqKV1KvNR9KxI1OR8X2beNvr4ON2HDYNfXjycbbO3mXfZHHOpbov8_bZArOJj1CyijmZbRZnQ7drdvkPRLUjV6LzMdhrVb3ChBOc4R5ou0bRRkrtQwTT1zXPGdqn7ky1IObcw6iwPP40eJ1AHGK2jOeGDh7R1iBv0gAWpbOjQMj5NbStePiwS-spdAD3nomAaHF0FoMZ2mWD8UT9gEqfukIOGc751PiZRMNnA1nukO6T7YcBOBnLaupv1ptcSrYZaCtgU6TkHnDuhFve1NZCR9H-eKpBgwiHSppLKYljSWmGJqfWNNQ82F2RGgyKFrUx4ATIazGIp24L-RqlJ-iCBQg3r6LnMvW9xWK5l8VnrG2ANdcf-5YT3N8_t5DDvcD0M12bDhN3gZH2plGkLCCOYG7cSYw8umyZ6f4d09n47K5SYokpt19Ad8fOZtdxQpO50Qnnewm4Ue3sKvsFNUavkhFKzFELsydUCs4W3M_5Ejm9Kk3PLK_xIrVE-fiqFORF1ppiwie_NOmvCg3q5xj9Nn56_sEsnm1b2BYHrXIogD0vhKyTBOW3bl-Y1C66cexxT_UX50EBn8EIgjpzj7YTuI5DuuttVz5YrUwSJoPAPnLWiYRnWjjKDY08diJigL9ifZIyVr5slb7WWNGg09jur1P67fqYcky269svo1eduE2nkDrSIFtFxXhF0xSnjxrHwtff675l19KUXNhNsqpheBkrWZZbzhYlv5ajr9LOFXcHeyI434D3kJoBdNr90U5iVZ4DQ74ywPgPL3xn8qOVc1yqNJ-5UtnntdnYK6W0qWLnPkCWk7n614wct4RY7PgU1C7ZgkZgYgfp2MIFiXuH1m69YscuT6B5gZmMBorUN65x5EefIroytQgTfIyaZsD4AQz84SYqFUYKmXy4Ak4OKoknL01G3Fhm7czWLrB3tRsv8H2jdckeXOE6HGFrEE-F6Awt3AR8mZBtvkHaFhWDlCIoWIPa8lELs4G2F87lgpIl_8qgGk1uY5wQ8MsFXid2lPWmaqNG2eonzS9a0yfuxMnWQ0gQHg8puiAQU9y6WHSc76WpPRKPg6aXmyFQ9cblU4DApG3mvNogQdm8hpU7M4SxCDnzR1CnddbflzVL14yWXZOJ0O4-V6baRzqeG9o6A5YfSPubw5QJaUQCDLgdlAPc3GyO87E8xERtwRVT1pXfrznFOJqYO7Ul_4xsxig76xeCP43OG-1Ur2If8abXJf36XDwYaqHs3Mw0IRoZ5yDYyIgN0HkZcnGQETSBfxKVnLOZvSLUme-bhve6o78WUrBWd1RjKmLpCNuqyMk7Ma7EmE_FftXWApYnAS_VSNGIooxFBtDRw-ZZgJx6apEZFEZuOxXxZj2ffFttalM-fJyq9KaT20t2Z0x_il7YaYFQ0b5CLahgLCOyNMO71vtUL2dYG2JKmp8rsJEqcl5Wbm244-oZ4YAulxklWIk7rGkk_GUpOooMohRY9Qp3XNByUdqBmxP9m4Rrmk_dZpdVtCV1dSpv30ag1c30NVuI1Au4jqRV19MuQmcSOuz7355INl5YyqveP4QQXLr9cNiIRWSMDq5w7mGo5VgbKS6eUd3SzEI2WXbG3GaRRV31sNgHGtsIUMys_dJ9FcxYmAtMPEQS9rutTHUC5vgjSv3z568_3PrM-6QWz2_63M5yT2XcU50JLy3_KVSSnsk4NB71kll6-5i-SvHuDoctKzrd5TFGkAE1bfh3imuyEUKgcBw4HLrl-zpxV-UIh-KrdjjmfqdDFasyc3UTvvs31sssg54dA9MydefKjHGdGVbmTFQVkUAm0r3ak0nda-KWCNWnfrvwV6UnRAbH01jouwNbTyJ0ryjn4kBV-6QnpjdEUSxqMlXy924AGQAQq0NV38qPGUNvNbjYlOcf35QhWJRWbdXs6mzVwH_sKRTJr_ctYmVgUOplp-BjdTZdOdPnpReGB5dDWWW3IAGlqRAWeIViz0ErZmeMthCfBQvFWGoF04Ktv50HQChsIEj8gO7rn_8wP3NdrHLwo9wWrV-YvncmhaVgDliXPLLa_6ncphqT_ViLnyxHBu70TN6QN-KbaugVxQ9AYTLEdzNIgbzOtLQDJC8cOBzyq7pUj6rl7WeToi0wnORE8NGvU2GDPHikXaf7Rbtk7BFBLg2ExeZe_DVm6sdq81GAQBDD7n8_y4ofvIBYjU7j2vQ7KtA9QqPko2ENbMh6tm7NYDNAEK4j6KZWBINXrupeAai3LphD1k0XHuCO54m5FAHzo2DjLHEA1qun3zK6KoyiAV-oJQ-F8JWHFExY82o9q1S8835yvrrhY4l9AAsGt0M1H8rHj-2K0IooDd0eJPA2tOYwZpYajGufMaFFdnhqi8vm87jYtOl5eTbHr1r2XwGLSk9Ebd-vPO_dYTqWQPXD_L__A_WZnhjuCwAA";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: true
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    // Display Report object in browser console window
+    console.log(report);
+
+    // add variable to track current display mode
+    var viewMode = "view";
+
+    // command handler to toggle display mode
+    $("#toggleEdit").click(function () {
+
+      viewMode = (viewMode == "view") ? "edit" : "view";
+      report.switchMode(viewMode);
+
+      var showFilterPane = (viewMode == "edit");
+      report.updateSettings({
+        "filterPaneEnabled": showFilterPane
+      });
+
+    });
+
+    // command handler to enter full screen mode
+    $("#fullScreen").click(function () {
+      report.fullscreen();
+    });
+
+    // command handler to print report
+    $("#print").click(function () {
+      report.print();
+    });
+
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      var toolbarHeight = $("#toolbar").height();
+      $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        var toolbarHeight = $("#toolbar").height();
+        $("#reportContainer").height($(window).height() - (heightBuffer + toolbarHeight));
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+
+
+  </script>
+
+</body>
+</html>

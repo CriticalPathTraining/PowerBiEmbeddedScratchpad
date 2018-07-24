@@ -55,24 +55,22 @@
 
     // when loaded event occurs, set current page then call render()
     report.on("loaded", function () {
-      console.log("loaded event is executing");
-      var pages = report.getPages().then(
+      console.log("loaded event executing");
+      // call to get Pages collection
+      report.getPages().then(
         function (pages) {
-          reportPages = pages;
-          console.log("GetPages callback is executing");
-          // load first page in report
-          var activePage = pages[0];
-          currentPage = activePage;
-          var noOp = function () { };
-          console.log("Set active page");
-          activePage.setActive().then(noOp, noOp);
-          console.log("Call report.render() to display report");
+          // inspect pages in browser console
+          console.log(pages);
+          // display specific page in report
+          var startPage = pages[0]; // this select first page
+          config.pageName = startPage.name;
+          // Call report.render() to display report
           report.render(config);
         });
     });
 
     report.on('rendered', function () {
-      console.log("rendered event is executing");
+      console.log("rendered event executing");
     });
 
 

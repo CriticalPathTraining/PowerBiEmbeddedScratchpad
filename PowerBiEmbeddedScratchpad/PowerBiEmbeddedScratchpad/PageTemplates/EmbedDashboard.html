@@ -31,14 +31,18 @@
       embedUrl: embedUrl,
       accessToken: accessToken,
       tokenType: models.TokenType.Embed,
-      pageView: "fitToWidth"
+      pageView: "fitToWidth" // options: "actualSize", "fitToWidth", "oneColumn"
     };
 
     // Get a reference to the embedded report HTML element
     var embedContainer = document.getElementById('embedContainer');
 
-    // Embed the report and display it within the div container.
+    // Embed the dashboard and display it within the div container.
     var dashboard = powerbi.embed(embedContainer, config);  
+
+    // Display Dashboard object in browser console window
+    console.log(dashboard);
+
 
 
     // code to resize the reportContainer to the size of the hosting browser window.

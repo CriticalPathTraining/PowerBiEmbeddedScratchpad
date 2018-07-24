@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Report Inspector</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body>
+
+  <div id="output-display" style="float:right; width:400px; overflow: auto;"></div>
+
+  <div id="embedContainerContainer" style="margin-right:400px">
+    <div id="embedContainer" />
+  </div>
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEACWWxwrsiBVE_-VtZVBOhlko5xxbO-XYytn4392e2deFSxV1qP_8sdNnmNLiz7__EFiIH2WRjeEjPKrDiWtehQpJrJnOq7xiiwlf5BlgOUBaRN0gmbbobqXyce6Z5VPzNKZbIqp7i6ISpOpIW_o1U0SKVAE9ZyQwR3Y7OEBn6uyXlr4ruYHfoK241Lny7elaiLb87M60jX7GKwMRRmvwe3CfZU7j23LSe-5fTr61u76AE3vrIf32ZSMUOXJmofHq_XhRXB-gr1kVLYWTFe-EG7zmOJqQMTsU2Fm1IxhhKbRG6RBuCBWhW942yxvmSf8ppDVur3y5qRAUKX0iPM1FCWrroNwnRKrpt8qnSlCGt56AVB5LXChyOQ-uijl_V4apK5aRve9nHZsNkJpo81m3nSqDZ0hx7d4R7Db0Iqaq1dh6N1ufacZLgrWHZIoqco3tmfUWlq6e3dJr6DFORSKLCLQNZv0i1HVnyVIGjzDiQ4_C-V062MKeVk551DM-bxVysJ6W8MmX5Vw7mzBbNoecA2ONgKEFR1tZzkwG6woLq74uOMPkbGH5DuJWqfrIJHf0nwmbI9SD7skKkyrcxEUWp4yk_A3Z96au7w6byT7wu5cSka3lyQerEt54ybhX9-AhMSQTmHPGGr6aWzOKlIYj3Iz8BqVUSo0XU7ID-XJEkDhltWcfNOaezRU3f90TaZJ8Xdqg6Ng5F3che2YStPGvVhZiY0XupUVWthimbAKEUykJEDLiINOpAmI6Z0EOXdnR53CwroahAaIDmoRkFRDoe-m2Z0NmwVc17PjEGq3quUkVoV8KR3xw84PcL2m0siFVUUghMwQPrSPY7tNvV6gPQRqIROsoodrf6AcZqB7LtfB0thUnDR8L7yKj5UqccdXxmrlD4CkaxSEm_BRmDvEW5OSI0Xb-9sZO546JBBY-0yp1mRGfb1-qikwD81pWsEiApxaf4uvj1suOEYRcpPpquMf9C1zUHTmxLmZhe8V69sGpGjpuD46f-6KLVu-VoOYX7pfma0fHoYMI-uivZhZv64o6PFvNsZkk4wagEdkHj55ntUISlusTVEShkzZXWffBg79g4hqemfVXYDAcUq1shSgkCUyCCftlerk1CoZxWmivWB7EAJsPFwblrFcDMAgK8qRIDVxpF2x9E46qXizGvtQys6XP6N0gcrTBMFYKxBof3O2p-ANxX8cv3K_8KbtxwsiKeTh0YgCXVXMXyGRg8KcVoJSV4qLkU-g8kWrlk_FEzxFQZ8j198Lbt8kq1NptZfyKAVisbVLlZaVYBvx2xaW0W4PMp3YwpsTPNRlqXlFyEqoZ0ddyOSXSs5CzqXJy9d-rsCmvaqy597x1n-9O7SZJ2h6kNkmES9fnkxj-c7eI1QUcPCfqx6pLfhNfXRlYCNTaYPFohLvaicDJi7UPDMaJTsTsbRxjooIQ5-iQdeHIhBxBJnSTE1uRVarlY32i-ITRlajB0y_29EYOlJ7y_Op_PHofXnjncoQZxlklTxqlRQAWhRZ59DbM-nYyMBCGpPYLWfKFeGI_9kN_V2NBtiRWOq3juBU0nYjyjHHybLYxncXrVnp3LiNffapwmwgktt6FdalsTVPWEqbbjduqJgpA4PkAEfpgC2CgeWpwtNj9pBihXtYFIYJ4qSQ3q6dEmAdX7iySMNpzE4s6ak2fhlk5db-Yf2yRAvDC744ZzhxYxt23_JRNgAYHab6dKepILqJ_-pZgZPI0nwGle3njdOAbH2q7dthKOoCdSnws4XEFdHhmu1N2yCMSvCCRLZC7NN9veSp7gCnqNOy71I2jFAzS1y7s6Vu0sXD0ZWiONIaWYcZGwNtId0OB6ZgIX8zcMKoUG-XTh9e-yyuhiq1NEFdp1VwNfVJcbSAcRJ8PdGj4Qhc0DuJWliYdYC9E6YHUd-1Pz0tjp5vcte24Bu1jnM8pCad7jYlXj_U524Behydb4e22D3hbewmiGYMcTDc9QlCWN1lznKYcJ6tP2UVgCagawT0gjev8yk1TVByd2OWpdfSRfRd5bZHagypHSk6LW6460TDR4_V-7psROYi9ghk6genrfBecP0HG-vGAnVGml8Ae1Ayv4PAyUikhM4LaoU5wzzpuDTfP8Ud5Ah04xeUS99zgQotO7NuFP7OOHg7CdTMxmbjr6yD7UEKbprq0uCelJa2L88vc3Zk4eFJ8hAjv6Z2QhqG3YyOyrX0_jcvutmP38ljNWxH3LbBonUuNG2ziRXaFB4ECVrfqoYCVdN1UXXEbeJU3JbAu749U6a3B9qfnjpUr_AFDe7lJv0a8JjqPyONPge91xNt8KePcp3wUMFxcjvqVCUPFG62LythBr6ujl6KDv_786w-3PvM-_Zjymz4BKhcmZkwWLIKpla86iKtcp8LLvNAtdxDToLN50jGIvxw54bZvq2SaIdlnAuxqpDC_DtTSAKK6kcLHoB6LPLu891ZuQz6JkZfebmqCsKK_8xl8jGwAUhbQzAUtDuGyq5LRAwmDJTzyLJCx5RbjHtgUjJqWQlNtwbMoF3C7TWW3I_Hp5e90H9HBOe5DediYpnR-Klbf_yYHYp9AmeL30nPVxTIMUsPfECt66ztKcxCiPB62DM6sx4kFSJTW55WMHXvKI8WE8NzOZtmwi8QF-m-7AG0_vpSgsjJrOrUbzx-p8j62DE9l-nVHzki-eP6rDExZsPUCcIsHox3ZZw2XOR95xvXX3zY_c1OuSvhzWTsUs9TS9KQBkAcaGRVdeP1H5bX1mO7HWv5k4YFdL_oMfN88J_ABl_dmXmyUnbVjVzs3mRDymxBlwDOJP2hD1AgqNnC_MfmIyvmuF_K0tN_7E4If6ocmRnqZOPstMMf21FBD0JqG6jOlX6mvg9YDwb3Ec8dw2IG8W3-8V9LqywyqU9icXYPSlAl9XgzD2_QFaFkOVhVSKvJLc27ovKdnZLet08GSre_cGigYxAMItsxbymSJCSRlHDccw6dllt2pa_uVW0ami5XH3KCG15iWZw3lET7NOGayu13BXllaSWbjOQnChcVoV7jJC4CwOQRzXs1TViGa1w3fLZc4pjqc12cim7Cx9IHG4u4d0B4DruE5ZeksZ-aF07iLrcD_bf7v_wDOXZ277gsAAA==";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: true,
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+    $("#output-display").append($("<h3>").text("Visuals in this Report"));
+
+    var pages;
+
+    report.on('loaded', () => {
+      report.getPages().then(
+        function (reportPages) {
+          pages = reportPages;
+          for (var index = 0; index < pages.length; index++) {
+            pages[index].getVisuals().then(function (pageVisuals) {
+              for (var vindex = 0; vindex < pageVisuals.length; vindex++) {
+                console.log(pageVisuals[vindex]);
+                $("#visual-table")
+                  .append($("<tr>")
+                    .append($("<td>").text(pageVisuals[vindex].page.displayName))
+                    .append($("<td>").text(pageVisuals[vindex].name))
+                    .append($("<td>").text(pageVisuals[vindex].type))
+                  );
+
+              }
+            });
+          }
+          $("#output-display").append($("<table>", { ID: "visual-table" })
+            .append($("<thead>")
+              .append($("<td>").text("Page"))
+              .append($("<td>").text("Visual Name"))
+              .append($("<td>").text("Type"))
+            ));
+
+        });
+    });
+
+
+
+
+
+    // code to resize the reportContainer to the size of the hosting browser window.
+    $(function () {
+      var widthBuffer = 450;
+      var heightBuffer = 25;
+      $("#output-display").height($(window).height() - (heightBuffer));
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#output-display").height($(window).height() - (heightBuffer));
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

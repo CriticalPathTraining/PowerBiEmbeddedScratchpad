@@ -5,22 +5,27 @@ namespace PowerBiEmbeddedScratchpad {
   class Program {
     static void Main() {
 
-      PageGenerator.GenerateReportPage();
-      //PageGenerator.GenerateReportPageWithFirstPartyEmbedding();
-      //PageGenerator.GenerateReportPageWithPhasedLoading();
-      //PageGenerator.GenerateReportWithPageNavigation();
-      //PageGenerator.GenerateReportWithToolbarPage();
-      //PageGenerator.GenerateReportWithContextMenusPage();
-      //PageGenerator.GenerateReportWithBookmarks();
-      //PageGenerator.GenerateReportWithCustomFiltering();
-      //PageGenerator.GenerateNewReportPage();
-      //PageGenerator.GenerateNewReportPageFirstParty();
-      //PageGenerator.GenerateDashboardPage();
-      //PageGenerator.GenerateDashboardTilePage();
-      //PageGenerator.GenerateReportInspectorPage();
-      //PageGenerator.GenerateReportVisualPage();
-      //PageGenerator.GenerateQnaPage();
-      //PageGenerator.GenerateReportWithRls();
+      bool launchInBrowser = true;
+
+      PageGenerator.GenerateReportPageWithFirstPartyEmbedding(launchInBrowser);
+      PageGenerator.GenerateReportPage(launchInBrowser);
+      PageGenerator.GenerateReportWithToolbarPage(launchInBrowser);
+      PageGenerator.GenerateDashboardPage(launchInBrowser);
+      PageGenerator.GenerateDashboardTilePage(launchInBrowser);
+      PageGenerator.GenerateNewReportPage(launchInBrowser);
+      PageGenerator.GenerateNewReportPageWithSaveAsRedirect(launchInBrowser);
+      PageGenerator.GenerateQnaPage(launchInBrowser);
+      PageGenerator.GenerateReportPageWithConfigurationOptions(launchInBrowser);
+      PageGenerator.GenerateReportWithPageNavigation(launchInBrowser);
+      PageGenerator.GenerateReportPageWithPhasedLoading(launchInBrowser);
+      PageGenerator.GenerateReportWithCustomFiltering(launchInBrowser);
+      PageGenerator.GenerateReportWithBookmarks(launchInBrowser);
+      PageGenerator.GenerateReportWithBookmarkCarousel(launchInBrowser);
+      PageGenerator.GenerateReportWithContextMenusPage(launchInBrowser);
+      PageGenerator.GenerateReportInspectorPage(launchInBrowser);
+      PageGenerator.GenerateReportVisualPage(launchInBrowser);
+      PageGenerator.GenerateReportWithRls(launchInBrowser);
+
     }
 
   }

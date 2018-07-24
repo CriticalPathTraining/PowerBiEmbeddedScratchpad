@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo15-ReportWithCustomContextMenus</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="reportContainer" />
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEAB1Wxw6sSBL8l3dlJbxbaQ5AA4339ob33jPaf9-euWdJlZHh_v5jJk8_Jfmf__7happKdwGMaiqkxfoj5MEuhi3sq7wgw8xHJ2eVP7m4EvehTfSerF1-r7IzP7J6qS4fZFC8k4txNMxGhTUPiTeXXqiedGyGsiC69vKB1wuDDF74Ma70CoLmZkcpoV9kaQy04bFq9IhSpMm1tEJhcHzGgseSKHa0RvRQyhimw4z03ZqX0NxgMO9Z7CwwNOvws0jGkRlBsC1sPanHmVCQgZU1XqpOsxpH4GQSNEB3YAjtaESpBKKep6-6SG7ZlYF-pa7REEVVngfc7g8TOS6l9hYggpPQzEZYo4yaVc268KKu6vqtuhFPg2mwiwM11wEvsmoJ5yWy3fIZY1ES9M4H-xk8dvzupPD9UpDIXZ1YN-s-cang4hCEWplkxVTHn4qtthfQapDqrLAV4O33Fl9eEJ8Em2lYtePAnB3lvaHjNpajJ5aJfJGEXz7mGgU3IhFRAHjfoMAUIUS7-2tvd4uBxve4cmRyktvOuXqDTPH6oAPwBEMmMwAMuF9IVXupmz4cbuoQXYJItItMaI9hETG0mNuaWynmKK6B_4hLOT-NMPR3iIIzfcNjC_Jm5eZVRprBB13gw5q3TnyeBwIKvMakzZbYDXJ5FPsCw3aAh2tu8Jmwn_KS1gBkFpWTQLfLGNTM25SSJmUkoAHpJYQggOO8HHxPb5pC12BEaohP8jImQ-FLdh9ftl4QXvIJem8mSEeFaKR3bBpo4OAYK9PfizLnHEqOSU6adyJnKwCC5SRVEwto7Oji3_i97fjNP740WpbU9D36QVxz4cV0ZFlfqlZvT3Il2mOGuqI2OA16dZApKEPX3Levz2b6fayPQHC7lswqhchi2XmkHoVPlkUED3ADMhllpv8Yqsx11RIJEhkRpn6HJp2O2D5b2ffCRJxoXnnj69GOl4-dEiFNEsuc0jrRIUvte4T05uIdCgCPc3sRLxs7RPQZ_ghUg6oU97fw7QX3-s7UDA3wvlhAhXOgPhWs5EcCKwwVlSSZXlrDYFPcrMesSRbHqum4JalknSeai_HSpdH-jBdlnmqxe5MZBy9wl3XXrZYAslXnMnB4eL-klgbRnRxOz8gT7eeyeoGuQoPVh_IkDNYrRbJ9wQguwcp3xGVYpy7gT9B4DxWPqdty8yWO-FMDT60Wd7lHUBrnrHnWMCIy1FH50elnGv8t5qw5yjY9etylGtPY7t6pCDz7fOPymI5Nep5I1wXUX-_pQ0MPDxEyw2ImFG9zY985D1JESa_H6FyKvmpDJO3bZU8RxsMdZXaEMDxeh5lxigtzW-q6CgDD9ALnJF_GcaLhEzfYlY76dBIg6Rp29nWQIV1Biv46hR6Oaze7V8V7NzHitSGdQ1nOaDs4gq49ZOB8m1URhCK8G1a6Ao7QcSUk0JuTF1TcNeLT73lhrEcZBmVs11iio9-i3wu19B8nqRmrjEGedbseQtFv30tFOneA1hiXi2mFtYuJ1l-3Rub9QwuYzNbL6GNDfJXJmTLhaHJBJa1-iCBNEuDVarQIguzXflMuzTT5suPCm7Np9d3PaFFhq3LXJb-yL-YLZ1ODUz-XVBlXC3RAY4rz79IdZhh3uVgGNTWXUkad1E-7cbe4Qae3BAhQNPFOUMQOFKj5vRkopox0y74ffpHXOCfWVccaBGxOd0_--EmxR7fzcdYo3GiwlZjLEOsDWD8inyYw6UvK5rFE903Rc_ahnLGIxamsr1Vvt59sw3r00CE-4ZuiajOkcWApi40TZLB57_HywwHfZOQu1I7JEDNU1sKP8iGxnkcLTJFsN685tc3owxB6K2fdMgrmGD709WjQSt0QcAORn1TiAIDeLilEH-dnYdssmYsqdJyqzu-rGK2N47DreGUXXmv3lM4mBi9lw70Ta_y85G-Yz8N0yegMgfk-B18dacIPMe-9PV-sy1G1KlP7eh47R0DZk4BBajxhreMt2swxTOyb3wNoo9b270dOGUD1V3iObjDGrZfiIlhSvGML2GJrx73jF6gSCvw5Mflsqeb07Y4fiVtHP3w_ieAakhmWapMfIAer1RZxZlISzeSXPyJbYmBPvcXQWovgmrk-a7szYeYwYr56l2AK-YTERTjPzy_iwoL6XecqyyXwB-UhmBKbUg_pLQmGkArTUEgrjiCEumQPDdAjj3UV0x-qWC2aLb5AzxqSXuOgaoZzMlPkjqy2NDEYP5UNWYLJ6yyYD1jCyTSJLuzw0uixa1itIWq0Y_iaxvnLbXdE7WzoQ6mRPV_zlo8XaT-Xwti1cdk___nDrc-8T0rx_OpMbZHOI5sEFkNvwwNMhn5DJDNqS7mIsOadL_IxDMU2JVBpch0AcZ6QVtzB3ikMy2Y9B9JSsgkVS4eDI5POAn4pxFenv18W7NbCI6fzazMzYm27nrIkkRTqroPLXh7o6jJHwIjER_QwPSLqiK7dhHWf8wCUn_unA7kMhxwa7HxTNezxu08OQhW0y0_7EpipC1kL6K64IlrSG7jQQZCGDGz5cdhTcEZe39vuENytNMAyaBHAjkMDBrKiI3RErohBGA3oEuJrTT7CqbPs0sVJq5s3lCTA5gR0ndx3slYtPMGxgWRvVygxqHooUsLlg8HwL3F_xexXSUJ7z12cyjzsxxlzaLr9-uuvf2B-5rpYJf-HcvOx7Z7ATqnLEgWOO6fHOYj5d8ppqjHZj7X4jQVshNebhbC9_KF0wOJS9BdeanxlnUFMINJKWOH3X36psYdhFoy2WUZJmqFP68EQW2ZNqAgtz1hsRAuJ8V4PGVGl-hKYFk4clMaughnDXVlVtN24nssm_c9noBCY9RSErIAKlN-8n5Y2nAYkXasyisrPkTrzXqHjAPtyuDpFOZy34Tm2coNt0IOuR9jqDnxnbfLv4fjBz-j4_lm5m7xWV00DmhwydN1VQviEECQb6GcASjao95QQUqTNpuuruoQU0FMk8DSGx1oNTHqvP_lBiHh9igDUUqV4ShPag0_hjyBNPG4VbDTf2bEvVhVP9wINW78LMiPEB9eY_7oOOrx17QHdbv1g_t__AZOGZi3CCwAA";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: true,
+        extensions: [
+          {
+            command: {
+              name: "My Super Cool Command",
+              title: "command title",
+              icon: "data:image/png;base64,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",
+              extend:
+              {
+                visualContextMenu: {
+                  title: "My Super Cool Context Menu Command",
+                },
+                visualOptionsMenu: {
+                  title: "My Super Cool Oprtions Menu Command",
+                }
+              }
+            }
+          }
+        ]
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var reportContainer = document.getElementById('reportContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(reportContainer, config);
+
+
+    report.on("commandTriggered", function (command) {
+      console.log(command);
+    });
+
+
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      $("#reportContainer").height($(window).height() - heightBuffer);
+      $("#reportContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#reportContainer").height($(window).height() - heightBuffer);
+        $("#reportContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+
+
+  </script>
+
+</body>
+</html>

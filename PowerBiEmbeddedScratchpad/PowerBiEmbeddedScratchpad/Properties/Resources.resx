@@ -118,8 +118,20 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="AppIcon_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\img\appicon_png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="app_css" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\app.css;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedDashboardTile_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embeddashboardtile.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedDashboard_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embeddashboard.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedNewReportWithSaveAsRedirect_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embednewreportwithsaveasredirect.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EmbedNewReport_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\embednewreport.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -127,32 +139,20 @@
   <data name="EmbedQna_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\embedqna.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EmbedReportWithToolbar_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embedreportwithtoolbar.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="EmbedReport_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embedreport.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="jquery_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\scripts\jquery-3.3.1.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="powerbi_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\scripts\powerbi.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="EmbedNewReport_FirstParty_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embednewreport_firstparty.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="EmbedDashboard_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embeddashboard.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
-  <data name="EmbedDashboardTile_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embeddashboardtile.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
-  </data>
   <data name="EmbedReportVisual_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\embedreportvisual.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EmbedReportWithRLS_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embedreportwithrls.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="EmbedReportWithBookmarks_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithbookmarks.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedReportWithConfigurationOptions_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithconfigurationoptions.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedReportWithContextMenus_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithcontextmenus.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedReportWithCustomFiltering_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithcustomfiltering.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="EmbedReportWithFirstPartyToken_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\embedreportwithfirstpartytoken.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
@@ -163,14 +163,20 @@
   <data name="EmbedReportWithPhasedLoading_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\embedreportwithphasedloading.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="ReportInspector_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\reportinspector.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="EmbedReportWithRLS_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithrls.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="AppIcon_png" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\img\appicon_png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="EmbedReportWithToolbar_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithtoolbar.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="EmbedReport_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreport.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
   <data name="favicon_ico" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\img\favicon_ico;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="jquery_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\scripts\jquery-3.3.1.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
   <data name="loading2_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\img\loading2_gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -181,13 +187,13 @@
   <data name="loading_gif" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\pagetemplates\img\loading_gif;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="EmbedReportWithContextMenus_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embedreportwithcontextmenus.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="powerbi_js" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\scripts\powerbi.js;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
-  <data name="EmbedReportWithBookmarks_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embedreportwithbookmarks.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="ReportInspector_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\reportinspector.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="EmbedReportWithCustomFiltering_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\pagetemplates\embedreportwithcustomfiltering.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  <data name="EmbedReportWithBookmarkCarousel_html" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\pagetemplates\embedreportwithbookmarkcarousel.html;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

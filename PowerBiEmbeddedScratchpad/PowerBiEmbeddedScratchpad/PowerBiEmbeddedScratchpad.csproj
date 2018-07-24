@@ -32,11 +32,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.19.3.10102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.3\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.19.3.10102, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.3\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
+    <Reference Include="Microsoft.IdentityModel.Clients.ActiveDirectory.Platform, Version=3.19.8.16603, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IdentityModel.Clients.ActiveDirectory.3.19.8\lib\net45\Microsoft.IdentityModel.Clients.ActiveDirectory.Platform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.PowerBI.Api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.PowerBI.Api.3.0.0\lib\netstandard2.0\Microsoft.PowerBI.Api.dll</HintPath>
@@ -76,14 +76,22 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="PageTemplates\app.css" />
     <Content Include="PageTemplates\EmbedDashboardTile.html" />
-    <Content Include="PageTemplates\EmbedNewReport_FirstParty.html" />
+    <Content Include="PageTemplates\EmbedNewReportWithSaveAsRedirect.html" />
     <Content Include="PageTemplates\EmbedNewReport.html" />
     <Content Include="PageTemplates\EmbedQna.html" />
     <Content Include="PageTemplates\EmbedDashboard.html" />
+    <Content Include="PageTemplates\EmbedReportWithBookmarkCarousel.html" />
+    <Content Include="PageTemplates\EmbedReportWithConfigurationOptions.html" />
+    <Content Include="Scripts\powerbi.js" />
     <None Include="PageTemplates\img\AppIcon_png" />
     <None Include="PageTemplates\img\loading_gif" />
     <None Include="PageTemplates\img\loading2_gif" />
@@ -101,13 +109,6 @@
     <Content Include="PageTemplates\EmbedReportWithPageNavigation.html" />
     <Content Include="PageTemplates\EmbedReportWithToolbar.html" />
     <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\powerbi.js" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

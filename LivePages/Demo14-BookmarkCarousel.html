@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Navigating with Bookmarks</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="embedContainer" />
+  
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEAB1Wta7FCpL8l5d6JDONNIEZj5kzMzN7tf--dyfv7qC66H_-sdJ3mNPin3__A0UUupInYa3anL1Pn4QjspROrkAfHbn2KQTD8dPKUN9LXPYUM59ekbLZbQU3TDQkczhswHq3-aAmF97cFNY-0QlBK-fZqljZ5MeMSG_MJwF0yK8GA2t12zeZkiBJrP3c-xkW_YjfLkVnodPxcRjtVq62z9XFbqivrImYhe2COLTM8FMLLTSv7KtV3hn0MfqFtS38tcptmq9QG6h5f9rgTpeZkQi00AZYldJcgLbK97qzJrUV9Ta1X5D2UamzRQIYVqmWt-dy1gZsaWEitMknt4hr8UKyNlVt0VuwaoX_S2Mw6UD1oTuekppmMEMRDzR3Q00SZ2YA8CD-lPEFvEwNBDJupduCy35uWi-DbtvHXu9X0XxtTffEOSAjOUcX5ucvGA7CVOCW7IwVHMwLJJ_zCxuxX2hhtf7QPLlcUd6MEfo7dWmshKYZ2LmwZlFDKV93wSMYpCkuWrx9kP-q3py_VH-CpmeW7PzJwF2MrU3At2aOqavGd3Tc8TutoWeYmbItQr2Piw1wjX0SNhtfW3KSvWW__DIa8_7zO7SWWoz5oiacXG5IANYNMCqF_D1MywEJii-uq_1ZLN9g5e_8HDwsODfvg73UcZNMShSI6AcJ3yj__J1fEZyhgJ8fFGFhTi1tpQZHLpprDPZoC4V5z1zCmA9pZkbnf17lCiezI5TF0wMvyOltRN4NknpIPr7wQ1IIxiy6dQUmtblzC2B0cptHBnCAE1Ur0_STSYDpGuKmIG7UtBX2EPpf8iKBId56OiQuk6vuspnxgufgQmx5hDPj4GESFL7kh1MfS-2PhwF_PF2i6gIiCvo5Bt8MGMKfQynIiTQIfaONUKYyTzrjQzTvXSka5vyj4jyR8VO8GyyCZhHU4I3O-M_m_RlqPc54eDeIlVs0cJrwJGk0coREwc4ItgupDPA9Si-9jGQkdb0wwxrA3lGCdpaVUhKWzTL-NmQBc1yhAkbCWuBVPfsJQHMjt30e_JOkTS38cEOSL1dWZxnzGAGDWmu1fx30NPxU2MZLbZsOW_RuE16BZckuWl_f4zHY322R9GxZG_lVb625O6NNvQ8jVR8Dfck0dinQQe2ZTpAUl4o1wFgE76RdtOgAJleS9lqu-L0l54zxqfJqv4Yk5addy3ClySuTZ6SjQ4e6dPDey2XJNHoZsCsveAYwzQ6w4pEEd6VggVA-EQSzUDftqSz0ftzhKeiy4u8aVjuDmqzujHUXvG4LUfI13Wo_zS62Nby5Sy81xDJEBUhLqgugb8Z6spBByhuO-Ie4CsgIaza2RC9p2qYyHz129CPyOLykEyIH7nifcuLr4K6vgeRTzhfCV_t6UrP6_kpdtckCGv2nwOr3jtDgGbpX7EPvBM9he3e1kVvGOaDh8a01rcdsXo9OJj0FNuCiOhAB0fFLCxEeVu9aLtJFYOxCv4Q6OMVQak9PMFo0vuLMU4cly2BuTyFVB-uxUmFxCt5FsPwCcBy_VYMZXo6kAvS4voHV7mVHT79BWLIKclsWGZrOJIxV5gGftTHu2SNx6TdJSNORJDh6KLnOXfD5-g7qybkuMkHpWgiqGgO82A6LLPyW3ycP8XTljeQLLKfoq77vmnW4NX8759e1cx4CWIXj4n1Ad--GmHdYQj1XrMX83klJiloHPLzpvS8vYT6c9hvBuqLDFHZCp1RhK_df_0Q_ykWm6gBCFE7YpauhnUer61NCTa90TJVb3PBXrRcRkXcCFOQ7IlEjfUm2Fiyxo2FeJzgFJG84BsQMPCWSsZqB2Gq61O6kt8awuF_Ow3kgVM_MtLUKgchweY5BeH-f1m5NZXcmy7JSXl5m4mnkz5VCYRZbgv7z_raRgOiJi6dQ7eKUK-e0smLALQ0-BHg2xE89ppfViMOeLKL5FtJd2vTEpwVS-ILoutRTZrhSzQr_2ZWt5MHroySVLr-7EwkZ8K0spPOZY9jSHY8HJz8Wp-GuEGQ-9DZ7p9ZHwtHtXBgKvwpOQwUqtBqtCHjZv4SlDOS1gj7L2mQH8H9jqRX7iIbgIw2g1Z5DRMIb0yivDvRkyZPGDfE__si3WaTL0EsSUv7aXaC6VbohKmnO6dusBKCoJmEzCPklpYwh5U_sZJdrMZmkafykvT-1tMCfrAgKTnQs4BVQep2XbsG1r_D-iHPs1-gtHmqZvxM6lKWvYuVOF4ieEPZDzfrFoxHZFmf3iwE5AcrGI5RRN9NiNZCfd4AOQr45LoYLx9gLUCczdDc4x31h96AhM_uUdMtrGzQRCEEZIMWbF2bDb3HatIauiNijEPRd8iPpxYW8-z___OsfbnuXY9bK96_6nFPWTSUc_NG0cN6qUtpUiICD89PCOfgMDiy80UfzreHPkLWxazo95KwrOEuhV_oUBrqPqXWDY_6c5D0xUo6jm91Axc0YgTZ0y-hIEz6MHEae5ESFtO_B-Mt-0_vLIK3PQuHiMS7AjfAj-sy3-UngJJ08a2StBPlJMPS3_hE5JY12wkvrIiQwu7z9kZtxBsEi5UuM_9nTUP_FQQfmHmygrlumK52pRFh-8t1-bSetEkDxoSDDRXrhgArJC6FgNnnKDSWn2ExLEzbNukCYvE4QkL0dn1zySdU7FBTDJav2f30jDhKFOO6Uu5nqb2HqKkO4UK5e6Yut5rdt_vKCdxEcSb_d_s9_YX6XptyU4A9lgE4gIyAapYL97VkERYWgkfnvlNvWU3qcW_k39sB9o-Kv-sTUVHzoBWQ-_yQaEeiUd2a7xO9E94jk8-a2X9Dxa_VvYsQi3V3sbEZBhCjjQ_mvet-uJNN5o-v2lG7kwUto3lgknxioDPLjMy5xOh6NjCruLPzFORJBngeoszj7EjhxjHC2ZPlKT9w7N82Y2bhIlE39_oxuTkQjcD9cKoEbsoJyMINdPYi8_11M7UflHkmdtQeFChjsW6IuBXwKdGE_VhLM7D439sQs3QkLZvggdajy4K89_pkKZLEyS5A_Ay87UsZyXU-n9mbX2zxhIcm1q58RDxmTaC3wRZ4E6hNqfxlHx_YBEK-fknJvztwp361yDpHGlZnho1ao6yDW_3_G__4fptN1tO4LAAA=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: false,
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(embedContainer, config);
+
+    var reportBookmarks;
+    var nextBookmarksIndex = 1;
+
+    var applyNextBookmark = function () {
+      // get the next bookmark from the bookmarks connection
+      var targetBookmark = reportBookmarks[nextBookmarksIndex];
+      // apply the bookmark
+      report.bookmarksManager.apply(targetBookmark.name);
+
+      // advance nextBookmarksIndex variable
+      nextBookmarksIndex++;
+      if (nextBookmarksIndex >= reportBookmarks.length) {
+        nextBookmarksIndex = 0;
+      }
+
+    }
+
+    report.on('loaded', function () {
+      
+      report.bookmarksManager.play(models.BookmarksPlayMode.Presentation);
+
+      report.bookmarksManager.getBookmarks().then(
+        function (bookmarks) {
+          reportBookmarks = bookmarks;
+          setInterval(applyNextBookmark, 5000)
+        });
+    });
+
+    report.on("bookmarkApplied", (event) => {
+      console.log("Bookmark Applied", event.detail);
+    });
+
+
+
+
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 12;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+
+  </script>
+</body>
+</html>

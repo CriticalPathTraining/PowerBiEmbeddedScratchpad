@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo08: QnA Experience</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="embedContainer" />
+
+  <script>
+
+    // Get data required for embedding
+    var datasetId = "b4a48602-71da-42b2-8cf5-44d35b2ac70b";
+    var embedUrl = "https://app.powerbi.com/qnaEmbed?groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEAC2WxQ7siBFF_-VtHclMkWZhpjazd2ZoM9tR_j0dzazrqlR1Cv_zx0qffkqLP__-o488eXhTmJbwNY-tSSIycvqU-bikf7S-QIXbZhza26YK0vmr9oqlwby2c34ceIQSdTyeg1NJfF3oeru081NEgo9TQfQS0kUqi2Srm5krL4g7mkH6sJ-Cd39gR6wIVlv26vSe6i5eTmlHxFy5bbyZ62l-xyUN0gM2C2Ye17maq6kXqjCiwwQ3b3JVGAB10hgnRpH49kaVwWvGY6PU-CZtsDb0miCE1F4HTUDCRHXyCK_6KhGDP0rmLGF3Ldj8iB8kaUfJmN6N_dJ51mPFEon5KQss9AsXhsPBWDE8DETu4il7BbVOpBVOBG6Tryv4pYfEbO1MwMGt4-K8IjIGrzjG9zPp5IVlbGdg-oRLFcjdukkLEHrh5ziIKN_cMxfIwbD7Z1BFxp2tLavvpjgsm0xJkzX2zSUckW3j_PvOWog7gbcpZ-tJr154dRMrkPllxm9kQAngM1piRMMujnFyM846Qp4KhF-z0Wg5LkFS8MCyjsn5XpbYZU47GqsQ0MuXr1eNKtrAFldRmBYpqKselS1nm5g2jJ8N9TwXu7FoU_K3D82ZAuWvUWL66x1v2kF2Yo9-4OzPz1XzjG6VE7zqocXSN0GlKd8TA2vejkyF4W6xE0lWiPaewaZcj0g7ngUdg15wDDC4rG3MOiFreeQuG8tUe8buUZpsuMHUC_3BuyKPY3HyfKFgIe_zsQJrYmnbVLRal7Bzy8HEqpLlUq3gzoGcy3qVwqfTHidtZ70eJ25hq5C9bipVT_jqe0L4pyq5tsSol8sRomkP4XPuX6YV0WR3iOH2sqpYRJlReAyb4f0Ndl3Fv6aEHE5xVLsBRORMekJI-S4KE3fUSpWHDE0il-M9VggA3y-HQmT0SYkmrwZyukQBRQtKDM9clIGampmHV-zVu4im93pPOaiPP6EyWlkwf5XM7G6-Y2BJrNP-ddC9kDuwAxcMHdJYg6YaWrXdxgF0DyfssAKmsykM_AzFlMhcEQBg246i_IzUfK-pnmgf3ryuiDcQIj-wmHQURwF9kv--8adO8gmZ6yKIAauoOC7uCd1ZHmcTbqXmlM1SmsVvyW851bDGiqTemgHs6IPxhpC_CKcpBmiin-aGU31bwWpHUcLjppntja8yDQQPBai8EJ6HuDPrEZMUnWH4sQMn8EcygSWZNK2lxS0X5rUdzEnqppHcm0ORayAJWFxqvvyaK9AQLuU1160OKnsCUF4VD3kN530EUJtb6qhPnXNMhAdU6Mo8EsV70WASskl3p40mx5MCfwDaT7N5FE8Z2MN1gzRsjFhcrAcJnKBymnTPcqbWAyVDerr9WqTDC4C6uBuE1-RrFUEWo_KZxZ3iOlnTJuNxNITym_9-hGQv4Htp3qNlZOyMo5EytCuBBoRG7SpVzXY4VqEhL5s74AIlo8oqzWOnGYXWoSB2DvWaDT_tqgQTyZdtu4EHC3T5vJPGdfpVKo4HaVLVoNmJWGXGdcHmZcUf8KbbUcdM82ScDlypHlgClDSNQUa7TuPLiDnpLVTPIqe919mer3aRkHPFB4mOg4c82QBvQqAxq4E6oXCQFd8-EPytyJNzv2sLo-Y5PhTcI0heQJr3XYpC-S5A2iH9FEQBT3plvqW1O0vNU5gfyKse9ehmNbMek6dgu6xCZkDx3XC7S7Q-S92aS4jnQ73F_YwFA1doGtyAM6dtY8B6gTBsenqIgYR4b18FIvwmm6lygoXoTdSyWq5XGOth5bxPFK3zHy7tpIpLqNfrhmQIQsyy2Egjo-az4uTTebIk61SfL3VmZPZg9OeyFO1phhl-XhbuvNosoGLjQ_aH56W8b3EwACgK96gWyKdVY1pc9ig9kNZqmDjFdhL3a8-NPmWc9LDmeveeBd44pOVSordInZLwLeIyrQ54vju3EgfMp7VWzjRD10Hvjo1PuipEt9FBIMCvlqgMwzlGLXQ6G1TUmeyZHLRAtLgPNhVMwJUzX3NFt0gBlEGDMnRz_gNKI-xHtCnF4RxH0epF15H4dA3jMHL2ZrNYH5012hWwFUISIHIgvWmkgsVezl4ZiQ97mxtI4pxjnyu-L-OgsiP5rGOanDDvsftF95cA2V9XpZy-hunTv8em6sy9Di8Yf7kpYhEBJh_FGIoVREHxLU5nmZr6jqOOEroyqEwbwHMiUyyhj5u2URoe-VZYffPmVkaQFiInlAR9W7_HMOS0_0maapk3s3euMqbSzEF1_vrrrz__-sOtz6_UWvn83pRzV_pNldCE6VUYOayyUykNQ-m76UjczCR2TPU8jBh0D8-SBXPR9W-JPxxN-XnvBxGvf_SKd8DscKiqAJ-p_EfafHBMy1QFUUFEIdpPjp-6UhVBqLP0CMgM9MgEemQO8bXCs3LiuPo6RBLpLlemSzJJPxutjqJufNVhELusSfyayp3DSbUdp8LccygHVxIuJ9EVSoG8BWN3DRLG5YYbhjHPUFuEgwIBzKNa5zVLliea8Yw1BmQUth9Oh6g3V6zo-f1fF2d8GTs6pXFy9kNkoNKNb6FKpZKemtzCVemNA5fcyAk5vQ_oqb0Y31DOdQ11-EaUiWjlZ8dWthFeE6yPaLT-D-Znbsrf7vlR1jpS9D3GAchfYnXXgjB6ff5WuW09pvuxlj_ZbnnsxnT5Zkd0p12ekW7jPvv2V-0-_YoaJ2kRsZB1aOuxrtbKZlqYifrxEqZ1Y7UqHyMAGCeD3ctmaYaJd2X_LftqjxWDSH-JSEayjkuiyYXBsaa8qURbHo_8Im21SM44D8SKNCYp3WNmZ-aAgvn2oNH-Hvy1-NMHMQJdlT9HUNFxLnEdx4m40bAKDpKcNbPddgp8X7RAJqQ6STdf_3cwBY3nPbNvd2j6nVfL9C_vFIve4-ldm6kbTnmpg1_91wuSFVqrlwV31755ysskUi64SupAC-hJaEVStwSqicOGDt-uu8-BG6-jnoIPpR7tgJt-GEwu1XUtnuxnoYP1oLMsqpX_x_zf_wGkCw3hmgsAAA==";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'qna',
+      tokenType: models.TokenType.Embed,
+      accessToken: accessToken,
+      embedUrl: embedUrl ,
+      datasetIds: [ datasetId ],
+      viewMode: models.QnaMode.Interactive
+      //,  question: "What is sales revenue by quarter and sales region as stacked area chart"
+    };
+
+    console.log(config);
+
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var embeddedObject = powerbi.embed(embedContainer, config);
+    
+
+    
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 24;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+
+</body>
+</html>

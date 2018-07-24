@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo07: New SaveAs</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="toolbar" hidden>
+    <button type="button" id="toggleEdit" style="font-size:14px">Toggle Edit Mode</button>
+    <button type="button" id="fullScreen" style="font-size:14px">Full Screen</button>
+    <button type="button" id="print" style="font-size:14px">Print</button>
+  </div>
+
+  <div id="embedContainer" />
+
+  <script>
+
+    // Get data required for embedding
+    var embedWorkspaceId = "7f4576c7-039a-472f-b998-546a572d5da2";
+    var embedDatasetId = "b4a48602-71da-42b2-8cf5-44d35b2ac70b";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsIng1dCI6IlRpb0d5d3dsaHZkRmJYWjgxM1dwUGF5OUFsVSIsImtpZCI6IlRpb0d5d3dsaHZkRmJYWjgxM1dwUGF5OUFsVSJ9.eyJhdWQiOiJodHRwczovL2FuYWx5c2lzLndpbmRvd3MubmV0L3Bvd2VyYmkvYXBpIiwiaXNzIjoiaHR0cHM6Ly9zdHMud2luZG93cy5uZXQvMDA2ZWU0ZjItZDZjYS00YTBjLTljNmEtODVhNzFjNDYzYzI2LyIsImlhdCI6MTUzMjM4OTA2OSwibmJmIjoxNTMyMzg5MDY5LCJleHAiOjE1MzIzOTI5NjksImFjciI6IjEiLCJhaW8iOiJBU1FBMi84SUFBQUE5LzZ5L2RQMzZHei9mdE9BUjhkU2JxRlpJclYrbW8wSjRjU3Q2YXk4bFdzPSIsImFtciI6WyJwd2QiXSwiYXBwaWQiOiIwMTEzOWQ0OC1iYWM4LTQ4MTEtYmI3Yi00Zjc0OWNiMDRlMWMiLCJhcHBpZGFjciI6IjAiLCJlX2V4cCI6MjYyODAwLCJmYW1pbHlfbmFtZSI6IkFjY291bnQiLCJnaXZlbl9uYW1lIjoiUEJJRSIsImlwYWRkciI6IjI0Ljc1LjIzNS4xNTUiLCJuYW1lIjoiUG93ZXIgQkkgRW1iZWRkaW5nIE1hc3RlciBBY2NvdW50Iiwib2lkIjoiMWE2NzA1ZjQtYWEzZi00ODE1LWI4YmYtMDgzZmM5OTMwYjBiIiwicHVpZCI6IjEwMDMzRkZGQUNERTg4NjUiLCJzY3AiOiJDYXBhY2l0eS5SZWFkLkFsbCBDYXBhY2l0eS5SZWFkV3JpdGUuQWxsIENvbnRlbnQuQ3JlYXRlIERhc2hib2FyZC5SZWFkLkFsbCBEYXNoYm9hcmQuUmVhZFdyaXRlLkFsbCBEYXRhLkFsdGVyX0FueSBEYXRhcG9vbC5SZWFkLkFsbCBEYXRhcG9vbC5SZWFkV3JpdGUuQWxsIERhdGFzZXQuUmVhZC5BbGwgRGF0YXNldC5SZWFkV3JpdGUuQWxsIEdyb3VwLlJlYWQgR3JvdXAuUmVhZC5BbGwgTWV0YWRhdGEuVmlld19BbnkgUmVwb3J0LlJlYWQuQWxsIFJlcG9ydC5SZWFkV3JpdGUuQWxsIFRlbmFudC5SZWFkLkFsbCBUZW5hbnQuUmVhZFdyaXRlLkFsbCBXb3Jrc3BhY2UuUmVhZC5BbGwgV29ya3NwYWNlLlJlYWRXcml0ZS5BbGwiLCJzdWIiOiJIbzFuMkFwbzd0SmU1QVd6T2pnSmlSWnNCVVV3LWd2bUZNWEFWcnBzT0k0IiwidGlkIjoiMDA2ZWU0ZjItZDZjYS00YTBjLTljNmEtODVhNzFjNDYzYzI2IiwidW5pcXVlX25hbWUiOiJwYmllQEJpekFwcFN1bW1pdC5vbm1pY3Jvc29mdC5jb20iLCJ1cG4iOiJwYmllQEJpekFwcFN1bW1pdC5vbm1pY3Jvc29mdC5jb20iLCJ1dGkiOiJCNDBDOFBJN21VMkVTV0s4dk5BcEFBIiwidmVyIjoiMS4wIiwid2lkcyI6WyJhOWVhODk5Ni0xMjJmLTRjNzQtOTUyMC04ZWRjZDE5MjgyNmMiXX0.joo3wQfquZjx8syRypZOa5HP-ifbWZ3rdYFB_-3S26CVetAf6FszpdXotysG0qilMIH1G79hHeGUTmNEgTN92HfOs-DUqjkbQ6oHCN_hlrutRzrZfjaIsShAPEumfaWyY0Ns5kIKTCKPNd24qJdyBKLVRKafLrlYxpkuAu0CoKhu4oTaRVCWWWN_ZqKHIf5U5mo9JrQR6aGA-hF552DhM20ExYcj14Df5--ayYm9ig82ZtwApTNCgwIsZjrfH_s_48AoxQIU9txzTFUMknuKJ_ZUV6PSp69ZO6jWdGbTQBd0mPRkI-ugPfgIQ3nRRbHocj-vomXJZkyyAYWlf7HmKw";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      datasetId: embedDatasetId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Aad
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var newReport = powerbi.createReport(embedContainer, config);
+
+
+    // Display Report object in browser console window
+    console.log(newReport);
+
+
+    // this event fires whenever user runs save or SaveAs command on a new report
+    newReport.on("saved", function (event) {
+
+      console.log("saved event is executing");
+      console.log(event.detail);
+
+      // show toolbar
+      $("#toolbar").show();
+
+      // get ID and name of new report
+      var newReportId = event.detail.reportObjectId;
+      var newReportName = event.detail.reportName;
+
+      // set new title for browser window
+      document.title = newReportName;
+
+      powerbi.reset(embedContainer);
+
+      config = {
+        type: 'report',
+        id: newReportId,
+        embedUrl: "https://app.powerbi.com/reportEmbed?reportId=" + newReportId + "&groupId=" + embedWorkspaceId,
+        accessToken: accessToken,
+        tokenType: models.TokenType.Aad,
+        permissions: models.Permissions.All,
+        viewMode: models.ViewMode.Edit,
+      };
+
+      // Embed the report and display it within the div container.
+      var savedReport = powerbi.embed(embedContainer, config);
+
+      // Display Saved Report object in browser console window
+      console.log(savedReport);
+
+      // add variable to track current display mode
+      var viewMode = "edit";
+
+      // command handler to toggle display mode
+      $("#toggleEdit").click(function () {
+        viewMode = (viewMode == "view") ? "edit" : "view";
+        savedReport.switchMode(viewMode);
+        var showFilterPane = (viewMode == "edit");
+        report.updateSettings({
+          "filterPaneEnabled": showFilterPane
+        });
+      });
+
+      // command handler to enter full screen mode
+      $("#fullScreen").click(function () {
+        savedReport.fullscreen();
+      });
+
+      // command handler to print report
+      $("#print").click(function () {
+        savedReport.print();
+      });
+
+
+    });
+
+    $(function () {
+      var widthBuffer = 12;
+      var heightBuffer = 12;
+      $("#embedContainer").height($(window).height() - (heightBuffer));
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#embedContainer").width($(window).width() - widthBuffer);
+      });
+    });
+
+  </script>
+</body>
+</html>

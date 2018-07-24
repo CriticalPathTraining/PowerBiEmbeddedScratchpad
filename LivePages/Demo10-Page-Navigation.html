@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Demo10: Page Navigation</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body style="margin:0;padding:0;background-color:#EEE;">
+  <div id="leftnav" style="float:left; width:240px;">
+    <h3>Page Navigation</h3>
+    <div id="loading">
+      <img title="Loading..." src="css/img/loading.gif" style="width:80px;margin-top:36px;margin-left:72px;" />
+    </div>
+    <div id="leftnav-menu">
+      <ul id="page-navigation"></ul>
+    </div>
+  </div>
+  <div id="embedContainer" style="margin-left: 260px;" />
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEAB2Wtw60hhaE3-VvsUROllyQc850ZNglZ7Duu9-V-ynOfJozmn__2NnTT1n55-8_BviMw7fgiIlSUQEykBY3iD4UPdmmn1LfBr8WN1rMpTBJZFy78u8L2JOn000KnE1es1vkB4h6UwLo2JElmokNgRM8py2nnpIT15ZmvPq2b2uvRw64V7ePDDq3H1gdtTp06ZWLdXgS3t9TZLrO90fa1NbULSqthdh5YS_Euyq5EWFCoXgyYlmYAC2lZ5e54NkDoL6S2wd6fLPdEvQVZemWW00wHVOfL8Zj-AWqrEPGR1aWZ-N1wPezYO42kbSr1vqKutxZZ5YbPbjCFKVS0GFE_k5Wh5k29ruWcwqSTJQ1aOhgoe9Bka0nfLwZRxhtN5XOeXxJYTKyumrI_bB8iHrPeNqAda8C8jHWO3rr-yt71pTRp9EjPDkl9_KqJVzPZP4tPZ8g-ZLqrfgVvbnegkQfD9A-HA_rc-STeE93lr5JoPtB9SbaEiVXb3LQicVz0uwNDKRJl3CnQ3Eyf68JN8Jgg5qK84pOqSG7D1C7iVVU_WqqcSK-3vXXvcMwe49NEkd5OJro4AElSVQeWaHipM11wYo81XJP6lIR-3PzLPXVT546KSzgut4IKpFwCisoofryPGWyd31EKzvyfDQF1N9cDMeW-NonSnhhADFwOVTAAWrIg5Q4PF3MDuaKGyJKinSoaByGd_lwvmdisDO1SowfNIXm86Xse-v5TSS84Rr4_S5OxPN7PxOuZmwTvsGCFzjkoLRov5PF9Yb0LdGjRAhEScAAsZoLPS6rGcH0Kex5e3VMWvsYP0uwg1xfThu1Xps09on8a7x8Uo3N2SUXpxRvPEZKTeqEmPWuLI_lg2yEaatzW4tqlD8JQIUMhWQOk1pJOTzg91LGjUjysXHGhhOXJEXrTnf9Lb-5SL4pD9KkYWJP9gYF8V6xUeY0ixMvKzRHA_QSmx0U7eTSaDkkWJk0sgS_EcFXUQplsnB64PaU4yCDXKCsofZumXbworOU5bDD1yVflVnqZmSWNELM0rahXcAkWwtCYaRKEqwe9QtxST4gNWm_BQbIg_wmW3Hmb3AfLq9vHxSYNhCqTk5zOPDy0eBBDzb5hJt7CYykkGeSsp4iyfJqyfotEhtd5HjPljdrrmA_ej69GvvLgCWmGpLpy8-tyohebKeyq1ewQlwdiV-B39MIDCivuBRyHWAyj0fS7Ohy6mEtOr-pZx0iSQ2ejKjEI3mjzYj1m-EhoW8t13L1zA8aax0IYWJ-278g07v70xsiiolwBCtmrz_hgnNXAVAUlKCmpYhu3uiQHW-BhNrarfZVo8b8Z9JGoOZDQraG1O0JoFyggFrOvLAudGcEW5feTxABNeVnG2wt0gOYeuMxTiYjm4QFuXh3gNbGCM6PtoAC_WVEWNg7i1FLC5DnXtOtL2jk4hEct3hwPOLFY-AUPll49HZdJUipi03N8tNgeM7oA6yDTzeIaeKTLjjfMv8A8KirymqWuOlhXksdwZdQlUojw9SqnATV0rD1Uktop9TcfN0OdOwdgQtV6FOZsdKKNwoFs7lhxDE4FNdd6o9uHQRp8r9-UIQYD9g9q6gZ9uQ1s1qRmfirmQMHMrvLPwW7wFsBlOn5C-4oJK82QMgkKiU91EoBB2Jx_hKcwzkXeBzzC21Y9QJnbEb0uSAIgvmrQBA3ZRNqWwIK91lpjfrwtx7j3HwJy2Gu6ot8Weqwu_RLqusgDEceJarKuf0tJk2pKvLVlkeVg4b1CG7VXHe0HgRCSl92aeCtvfn5ttmGwH3saZDrjCQu7PLVdu2SZYkCGaAkG4wPH4yboSitzzRM-ESkXjYKrLJD76VRQdAWj-8mIzxh8IuFpm6GOmeurwrnlh9PlmJEXpuojVmYgadpoX9sBztD-MyUCVbAsWMJ-L2jqF4ql1LDmXEapDoj0i2XzffnuyFBE70BPwKLEZY3lw_avcnso8R0esDRJsIcHV255Ku1S8WBRjCTfI4LFLYF1oxvXJMcdczdxIeFaOlMMfAj8rCT1dS79C8sYikDAQ7BON4IqLfvhuCZL1KcaoctmnVgHRSqx1VMsQnWm8YH_zqZUbyrnTLgB8K9CU9VaClwDQbZcMwCs9z3dowNxbnEdhABSTQaM2-V9lNVc1A_Yt1ntRo_OZxRzYjoFNn9KDvP-aGK-x3W6Ekbs2tdnXtU6_bVdPbCtVzbIW1rwUfCNs-sq5XpwTle8hof0WqqflyxOXqcYkMlkfwVHgnaQjnHxfM5guID6qELoVGysWX7RYAyJooc1eyWUjLqF3dyw2KbG9L-7j1-jXeRzdhSc9l3kmQ30c_VM_G1vXCi7roh3VU9HYx__vz1h1ufeZ-06vlNH8m92F9bZqpIExhb8mSG51e0kOd9d0MSO9Sn2nTInHAZgn03L6ZgtbmbJTm8lLIcCghOCdpnSdM7uEVrQHzgNGP9l1QpY2DV8S-U2fMjAgIzge4lB1H7F6XAOyeDMYCYOWeOsrScU73jjMQg7MsZ3LzyeBI4761IU61ucYUo7gu2CNqPZ8h4tPhslt4G1IhOrTAEB8z1l6Qm5YQiQKLnG7hhbuPgRZI1_TdkDL_guS4yREhv2snWPnuRpInOxmk_T0_lhDnzLfgt6TbbnVasIuovhwTWTaT9IlzRY-OInByun-iD_5UDRYC1Q-I30Dukm64_3yMKmj4RQ-NkvX0WyJDCmn_-w_zMbbUq4Y9yIbV3cbjQgljMhEf5sjMhwPyn8rpmzPZjrX6yS2oGD6VHc8oyz9J8tWB2u0Vhy_n6pjDJBVQ3lImE6RAsNMmBshaoWjU4PCj28vYh7Oai0XsvUfXXfwBYoZxZbY598mIpqJlk_56669PHnVU3hOsAwMI9BwzW6_bkZicnHcDBYhVLdZ5FkF0CLOr0NCOtFhtuRcdkHDrVXYMiVc-072bImXPM9qcc1DnPuvvlym-4OhViQTwVH9S1VWWLXFrXnHtZNAHfhAKcw6gS8DqSgYugtlHcnFkN75sotmSz8NLi3c3CYN9MG1NhmtzWdz90vsdeoIBST7nN-8KzNiwXCC1lwzgjGsOYnFx6ri743lvM2X0n6s0itcuggnRXJHN-mP_3fyXWU0PuCwAA";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: false,
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(embedContainer, config);
+
+
+    $("#loading").show();
+
+    var pages;
+
+    report.on('loaded', function () {
+      $("#loading").hide();
+      report.getPages().then(
+        function (reportPages) {
+          pages = reportPages;
+          loadReportPages(pages);
+        });
+    });
+
+    var loadReportPages = function (pages) {
+
+      var pageNavigation = $("#page-navigation");
+      pageNavigation.empty();
+
+      // enumerate through page of the report
+      for (var index = 0; index < pages.length; index++) {
+        // determine which pages are visible and not hidden
+        if (pages[index].visibility == 0) { // 0 means visible and 1 means hidden
+          // get page display name
+          var reportPageDisplayName = pages[index].displayName;
+          // use jQuery create a navigation link for each page
+          pageNavigation.append($("<li>")
+            .append($('<a href="javascript:;" >')
+              .text(pages[index].displayName))
+            .click(function (domEvent) {
+              // get text from link to get page name
+              var targetPageName = domEvent.target.textContent ? domEvent.target.textContent : domEvent.target.firstChild.textContent;
+              // get target page from pages collection
+              var targetPage = pages.find(function (page) { return page.displayName === targetPageName; });
+              // display page object in browser console
+              console.log(targetPage);
+              // navigate report to target page
+              targetPage.setActive();
+            }));
+        }
+      }
+    }
+
+
+    $(function () {
+      var widthBuffer = 272;
+      var heightBuffer = 18;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+
+
+  </script>
+</body>
+</html>

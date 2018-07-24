@@ -1,4 +1,4 @@
-/*! powerbi-client v2.5.0 | (c) 2016 Microsoft Corporation MIT */
+/*! powerbi-client v2.6.0 | (c) 2016 Microsoft Corporation MIT */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -680,9 +680,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Promise<void>}
 	     */
 	    Embed.prototype.setAccessToken = function (accessToken) {
+	        var _this = this;
 	        var embedType = this.config.type;
 	        return this.service.hpm.post('/' + embedType + '/token', accessToken, { uid: this.config.uniqueId }, this.iframe.contentWindow)
 	            .then(function (response) {
+	            _this.config.accessToken = accessToken;
+	            _this.element.setAttribute(Embed.accessTokenAttribute, accessToken);
+	            _this.service.accessToken = accessToken;
 	            return response.body;
 	        })
 	            .catch(function (response) {
@@ -715,6 +719,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.config.uniqueId = this.getUniqueId();
 	        this.config.embedUrl = this.getEmbedUrl();
 	        this.config.accessToken = this.getAccessToken(this.service.accessToken);
+	        this.config.groupId = this.getGroupId();
 	        this.addLocaleToEmbedUrl(config);
 	    };
 	    /**
@@ -757,6 +762,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	     */
 	    Embed.prototype.getUniqueId = function () {
 	        return this.config.uniqueId || this.element.getAttribute(Embed.nameAttribute) || utils.createRandomString();
+	    };
+	    /**
+	     * Gets the group ID from the first available location: options, embeddedUrl.
+	     *
+	     * @private
+	     * @returns {string}
+	     */
+	    Embed.prototype.getGroupId = function () {
+	        return this.config.groupId || Embed.findGroupIdFromEmbedUrl(this.config.embedUrl);
 	    };
 	    /**
 	     * Requests the browser to render the component's iframe in fullscreen mode.
@@ -812,6 +826,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        else {
 	            this.iframe.addEventListener('load', function () { return _this.createReport(_this.createConfig); }, false);
 	        }
+	    };
+	    /**
+	     * Adds the ability to get groupId from url.
+	     * By extracting the ID we can ensure that the ID is always explicitly provided as part of the load configuration.
+	     *
+	     * @static
+	     * @param {string} url
+	     * @returns {string}
+	     */
+	    Embed.findGroupIdFromEmbedUrl = function (url) {
+	        var groupIdRegEx = /groupId="?([^&]+)"?/;
+	        var groupIdMatch = url.match(groupIdRegEx);
+	        var groupId;
+	        if (groupIdMatch) {
+	            groupId = groupIdMatch[1];
+	        }
+	        return groupId;
 	    };
 	    Embed.allowedEvents = ["loaded", "saved", "rendered", "saveAsTriggered", "error", "dataSelected"];
 	    Embed.accessTokenAttribute = 'powerbi-access-token';
@@ -957,7 +988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-	/*! powerbi-models v1.0.3 | (c) 2016 Microsoft Corporation MIT */
+	/*! powerbi-models v1.0.7 | (c) 2016 Microsoft Corporation MIT */
 	(function webpackUniversalModuleDefinition(root, factory) {
 		if(true)
 			module.exports = factory();
@@ -1040,6 +1071,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		    DisplayOption[DisplayOption["FitToWidth"] = 1] = "FitToWidth";
 		    DisplayOption[DisplayOption["ActualSize"] = 2] = "ActualSize";
 		})(DisplayOption = exports.DisplayOption || (exports.DisplayOption = {}));
+		var BackgroundType;
+		(function (BackgroundType) {
+		    BackgroundType[BackgroundType["Default"] = 0] = "Default";
+		    BackgroundType[BackgroundType["Transparent"] = 1] = "Transparent";
+		})(BackgroundType = exports.BackgroundType || (exports.BackgroundType = {}));
 		var VisualContainerDisplayMode;
 		(function (VisualContainerDisplayMode) {
 		    VisualContainerDisplayMode[VisualContainerDisplayMode["Visible"] = 0] = "Visible";
@@ -1366,6 +1402,35 @@ return /******/ (function(modules) { // webpackBootstrap
 		    BookmarksPlayMode[BookmarksPlayMode["Off"] = 0] = "Off";
 		    BookmarksPlayMode[BookmarksPlayMode["Presentation"] = 1] = "Presentation";
 		})(BookmarksPlayMode = exports.BookmarksPlayMode || (exports.BookmarksPlayMode = {}));
+		var Selector = /** @class */ (function () {
+		    function Selector(schema) {
+		        this.$schema = schema;
+		    }
+		    Selector.prototype.toJSON = function () {
+		        return {
+		            $schema: this.$schema
+		        };
+		    };
+		    ;
+		    return Selector;
+		}());
+		exports.Selector = Selector;
+		var VisualSelector = /** @class */ (function (_super) {
+		    __extends(VisualSelector, _super);
+		    function VisualSelector(visualName) {
+		        var _this = _super.call(this, VisualSelector.schemaUrl) || this;
+		        _this.visualName = visualName;
+		        return _this;
+		    }
+		    VisualSelector.prototype.toJSON = function () {
+		        var selector = _super.prototype.toJSON.call(this);
+		        selector.visualName = this.visualName;
+		        return selector;
+		    };
+		    VisualSelector.schemaUrl = "http://powerbi.com/product/schema#visualSelector";
+		    return VisualSelector;
+		}(Selector));
+		exports.VisualSelector = VisualSelector;
 		function normalizeError(error) {
 		    var message = error.message;
 		    if (!message) {
@@ -1375,6 +1440,21 @@ return /******/ (function(modules) { // webpackBootstrap
 		        message: message
 		    };
 		}
+		function validateVisualSelector(input) {
+		    var errors = exports.Validators.visualSelectorValidator.validate(input);
+		    return errors ? errors.map(normalizeError) : undefined;
+		}
+		exports.validateVisualSelector = validateVisualSelector;
+		function validateSlicer(input) {
+		    var errors = exports.Validators.slicerValidator.validate(input);
+		    return errors ? errors.map(normalizeError) : undefined;
+		}
+		exports.validateSlicer = validateSlicer;
+		function validateSlicerState(input) {
+		    var errors = exports.Validators.slicerStateValidator.validate(input);
+		    return errors ? errors.map(normalizeError) : undefined;
+		}
+		exports.validateSlicerState = validateSlicerState;
 		function validatePlayBookmarkRequest(input) {
 		    var errors = exports.Validators.playBookmarkRequestValidator.validate(input);
 		    return errors ? errors.map(normalizeError) : undefined;
@@ -1484,6 +1564,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		var mapValidator_1 = __webpack_require__(17);
 		var layoutValidator_1 = __webpack_require__(18);
 		var exportDataValidator_1 = __webpack_require__(19);
+		var selectorsValidator_1 = __webpack_require__(20);
+		var slicersValidator_1 = __webpack_require__(21);
 		exports.Validators = {
 		    advancedFilterTypeValidator: new typeValidator_1.EnumValidator([0]),
 		    advancedFilterValidator: new filtersValidator_1.AdvancedFilterValidator(),
@@ -1496,6 +1578,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    addBookmarkRequestValidator: new bookmarkValidator_1.AddBookmarkRequestValidator(),
 		    applyBookmarkByNameRequestValidator: new bookmarkValidator_1.ApplyBookmarkByNameRequestValidator(),
 		    applyBookmarkStateRequestValidator: new bookmarkValidator_1.ApplyBookmarkStateRequestValidator(),
+		    applyBookmarkValidator: new anyOfValidator_1.AnyOfValidator([new bookmarkValidator_1.ApplyBookmarkByNameRequestValidator(), new bookmarkValidator_1.ApplyBookmarkStateRequestValidator()]),
+		    backgroundValidator: new typeValidator_1.EnumValidator([0, 1]),
 		    booleanArrayValidator: new typeValidator_1.BooleanArrayValidator(),
 		    booleanValidator: new typeValidator_1.BooleanValidator(),
 		    commandExtensionValidator: new extensionsValidator_1.CommandExtensionValidator(),
@@ -1544,6 +1628,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		    reportLoadValidator: new reportLoadValidator_1.ReportLoadValidator(),
 		    saveAsParametersValidator: new saveAsParametersValidator_1.SaveAsParametersValidator(),
 		    settingsValidator: new settingsValidator_1.SettingsValidator(),
+		    slicerValidator: new slicersValidator_1.SlicerValidator(),
+		    slicerStateValidator: new slicersValidator_1.SlicerStateValidator(),
 		    stringArrayValidator: new typeValidator_1.StringArrayValidator(),
 		    stringValidator: new typeValidator_1.StringValidator(),
 		    tileLoadValidator: new tileLoadValidator_1.TileLoadValidator(),
@@ -1552,6 +1638,7 @@ return /******/ (function(modules) { // webpackBootstrap
 		    topNFilterValidator: new filtersValidator_1.TopNFilterValidator(),
 		    viewModeValidator: new typeValidator_1.EnumValidator([0, 1]),
 		    visualLayoutValidator: new layoutValidator_1.VisualLayoutValidator(),
+		    visualSelectorValidator: new selectorsValidator_1.VisualSelectorValidator(),
 		};
 	
 	
@@ -2018,7 +2105,11 @@ return /******/ (function(modules) { // webpackBootstrap
 		            {
 		                field: "customLayout",
 		                validators: [validator_1.Validators.customLayoutValidator]
-		            }
+		            },
+		            {
+		                field: "background",
+		                validators: [validator_1.Validators.backgroundValidator]
+		            },
 		        ];
 		        var multipleFieldsValidator = new multipleFieldsValidator_1.MultipleFieldsValidator(fields);
 		        return multipleFieldsValidator.validate(input, path, field);
@@ -2640,6 +2731,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.stringValidator]
 		            },
 		            {
+		                field: "groupId",
+		                validators: [validator_1.Validators.stringValidator]
+		            },
+		            {
 		                field: "settings",
 		                validators: [validator_1.Validators.settingsValidator]
 		            },
@@ -2662,6 +2757,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		            {
 		                field: "tokenType",
 		                validators: [validator_1.Validators.tokenTypeValidator]
+		            },
+		            {
+		                field: "bookmark",
+		                validators: [validator_1.Validators.applyBookmarkValidator]
 		            }
 		        ];
 		        var multipleFieldsValidator = new multipleFieldsValidator_1.MultipleFieldsValidator(fields);
@@ -2711,6 +2810,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		            {
 		                field: "datasetId",
 		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.stringValidator]
+		            },
+		            {
+		                field: "groupId",
+		                validators: [validator_1.Validators.stringValidator]
 		            },
 		            {
 		                field: "tokenType",
@@ -2764,6 +2867,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		            {
 		                field: "id",
 		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.stringValidator]
+		            },
+		            {
+		                field: "groupId",
+		                validators: [validator_1.Validators.stringValidator]
 		            },
 		            {
 		                field: "pageView",
@@ -2825,6 +2932,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		            {
 		                field: "dashboardId",
 		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.stringValidator]
+		            },
+		            {
+		                field: "groupId",
+		                validators: [validator_1.Validators.stringValidator]
 		            },
 		            {
 		                field: "pageView",
@@ -3029,6 +3140,10 @@ return /******/ (function(modules) { // webpackBootstrap
 		            {
 		                field: "tokenType",
 		                validators: [validator_1.Validators.tokenTypeValidator]
+		            },
+		            {
+		                field: "groupId",
+		                validators: [validator_1.Validators.stringValidator]
 		            }
 		        ];
 		        var multipleFieldsValidator = new multipleFieldsValidator_1.MultipleFieldsValidator(fields);
@@ -3396,6 +3511,125 @@ return /******/ (function(modules) { // webpackBootstrap
 		exports.ExportDataRequestValidator = ExportDataRequestValidator;
 	
 	
+	/***/ }),
+	/* 20 */
+	/***/ (function(module, exports, __webpack_require__) {
+	
+		var __extends = (this && this.__extends) || (function () {
+		    var extendStatics = Object.setPrototypeOf ||
+		        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+		        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+		    return function (d, b) {
+		        extendStatics(d, b);
+		        function __() { this.constructor = d; }
+		        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+		    };
+		})();
+		Object.defineProperty(exports, "__esModule", { value: true });
+		var validator_1 = __webpack_require__(1);
+		var multipleFieldsValidator_1 = __webpack_require__(4);
+		var typeValidator_1 = __webpack_require__(2);
+		var VisualSelectorValidator = /** @class */ (function (_super) {
+		    __extends(VisualSelectorValidator, _super);
+		    function VisualSelectorValidator() {
+		        return _super !== null && _super.apply(this, arguments) || this;
+		    }
+		    VisualSelectorValidator.prototype.validate = function (input, path, field) {
+		        if (input == null) {
+		            return null;
+		        }
+		        var errors = _super.prototype.validate.call(this, input, path, field);
+		        if (errors) {
+		            return errors;
+		        }
+		        var fields = [
+		            {
+		                field: "visualName",
+		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.stringValidator]
+		            }
+		        ];
+		        var multipleFieldsValidator = new multipleFieldsValidator_1.MultipleFieldsValidator(fields);
+		        return multipleFieldsValidator.validate(input, path, field);
+		    };
+		    return VisualSelectorValidator;
+		}(typeValidator_1.ObjectValidator));
+		exports.VisualSelectorValidator = VisualSelectorValidator;
+	
+	
+	/***/ }),
+	/* 21 */
+	/***/ (function(module, exports, __webpack_require__) {
+	
+		var __extends = (this && this.__extends) || (function () {
+		    var extendStatics = Object.setPrototypeOf ||
+		        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+		        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+		    return function (d, b) {
+		        extendStatics(d, b);
+		        function __() { this.constructor = d; }
+		        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+		    };
+		})();
+		Object.defineProperty(exports, "__esModule", { value: true });
+		var validator_1 = __webpack_require__(1);
+		var multipleFieldsValidator_1 = __webpack_require__(4);
+		var typeValidator_1 = __webpack_require__(2);
+		var SlicerValidator = /** @class */ (function (_super) {
+		    __extends(SlicerValidator, _super);
+		    function SlicerValidator() {
+		        return _super !== null && _super.apply(this, arguments) || this;
+		    }
+		    SlicerValidator.prototype.validate = function (input, path, field) {
+		        if (input == null) {
+		            return null;
+		        }
+		        var errors = _super.prototype.validate.call(this, input, path, field);
+		        if (errors) {
+		            return errors;
+		        }
+		        var fields = [
+		            {
+		                field: "selector",
+		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.visualSelectorValidator]
+		            },
+		            {
+		                field: "state",
+		                validators: [validator_1.Validators.fieldRequiredValidator, validator_1.Validators.slicerStateValidator]
+		            }
+		        ];
+		        var multipleFieldsValidator = new multipleFieldsValidator_1.MultipleFieldsValidator(fields);
+		        return multipleFieldsValidator.validate(input, path, field);
+		    };
+		    return SlicerValidator;
+		}(typeValidator_1.ObjectValidator));
+		exports.SlicerValidator = SlicerValidator;
+		var SlicerStateValidator = /** @class */ (function (_super) {
+		    __extends(SlicerStateValidator, _super);
+		    function SlicerStateValidator() {
+		        return _super !== null && _super.apply(this, arguments) || this;
+		    }
+		    SlicerStateValidator.prototype.validate = function (input, path, field) {
+		        if (input == null) {
+		            return null;
+		        }
+		        var errors = _super.prototype.validate.call(this, input, path, field);
+		        if (errors) {
+		            return errors;
+		        }
+		        var fields = [
+		            {
+		                field: "filters",
+		                validators: [validator_1.Validators.filtersArrayValidator]
+		            }
+		        ];
+		        var multipleFieldsValidator = new multipleFieldsValidator_1.MultipleFieldsValidator(fields);
+		        return multipleFieldsValidator.validate(input, path, field);
+		    };
+		    return SlicerStateValidator;
+		}(typeValidator_1.ObjectValidator));
+		exports.SlicerStateValidator = SlicerStateValidator;
+	
+	
 	/***/ })
 	/******/ ])
 	});
@@ -3543,7 +3777,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .then(function (response) {
 	            return response.body
 	                .map(function (page) {
-	                return new page_1.Page(_this, page.name, page.displayName, page.isActive);
+	                return new page_1.Page(_this, page.name, page.displayName, page.isActive, page.visibility);
 	            });
 	        }, function (response) {
 	            throw response.body;
@@ -3568,8 +3802,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {boolean} [isActive]
 	     * @returns {Page}
 	     */
-	    Report.prototype.page = function (name, displayName, isActive) {
-	        return new page_1.Page(this, name, displayName, isActive);
+	    Report.prototype.page = function (name, displayName, isActive, visibility) {
+	        return new page_1.Page(this, name, displayName, isActive, visibility);
 	    };
 	    /**
 	     * Prints the active page of the report by invoking `window.print()` on the embed iframe component.
@@ -3691,7 +3925,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @returns {Promise<void>}
 	     */
 	    Report.prototype.switchMode = function (viewMode) {
-	        var url = '/report/switchMode/' + viewMode;
+	        var newMode;
+	        if (typeof viewMode === "string") {
+	            newMode = viewMode;
+	        }
+	        else {
+	            newMode = this.viewModeToString(viewMode);
+	        }
+	        var url = '/report/switchMode/' + newMode;
 	        return this.service.hpm.post(url, null, { uid: this.config.uniqueId }, this.iframe.contentWindow)
 	            .then(function (response) {
 	            return response.body;
@@ -3715,6 +3956,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            .catch(function (response) {
 	            throw response.body;
 	        });
+	    };
+	    Report.prototype.viewModeToString = function (viewMode) {
+	        var mode;
+	        switch (viewMode) {
+	            case models.ViewMode.Edit:
+	                mode = "edit";
+	                break;
+	            case models.ViewMode.View:
+	                mode = "view";
+	                break;
+	        }
+	        return mode;
 	    };
 	    Report.allowedEvents = ["filtersApplied", "pageChanged", "commandTriggered", "swipeStart", "swipeEnd", "bookmarkApplied"];
 	    Report.reportIdAttribute = 'powerbi-report-id';
@@ -3749,12 +4002,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * @param {string} name
 	     * @param {string} [displayName]
 	     * @param {boolean} [isActivePage]
+	     * @param {models.SectionVisibility} [visibility]
 	     */
-	    function Page(report, name, displayName, isActivePage) {
+	    function Page(report, name, displayName, isActivePage, visibility) {
 	        this.report = report;
 	        this.name = name;
 	        this.displayName = displayName;
 	        this.isActive = isActivePage;
+	        this.visibility = visibility;
 	    }
 	    /**
 	     * Gets all page level filters within the report.
@@ -3939,7 +4194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     *  .then(data => { ... });
 	     * ```
 	     *
-	     * @returns {(Promise<string>)}
+	     * @returns {(Promise<models.ExportDataType>)}
 	     */
 	    VisualDescriptor.prototype.exportData = function (exportDataType, rows) {
 	        var exportDataRequestBody = {
@@ -3947,6 +4202,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	            exportDataType: exportDataType
 	        };
 	        return this.page.report.service.hpm.post("/report/pages/" + this.page.name + "/visuals/" + this.name + "/exportData", exportDataRequestBody, { uid: this.page.report.config.uniqueId }, this.page.report.iframe.contentWindow)
+	            .then(function (response) { return response.body; }, function (response) {
+	            throw response.body;
+	        });
+	    };
+	    /**
+	     * Set slicer state.
+	     * Works only for visuals of type slicer.
+	     * @param state: A new state which contains the slicer filters.
+	     * ```javascript
+	     * visual.setSlicerState()
+	     *  .then(() => { ... });
+	     * ```
+	     */
+	    VisualDescriptor.prototype.setSlicerState = function (state) {
+	        return this.page.report.service.hpm.put("/report/pages/" + this.page.name + "/visuals/" + this.name + "/slicer", state, { uid: this.page.report.config.uniqueId }, this.page.report.iframe.contentWindow)
+	            .catch(function (response) {
+	            throw response.body;
+	        });
+	    };
+	    /**
+	     * Get slicer state.
+	     * Works only for visuals of type slicer.
+	     *
+	     * ```javascript
+	     * visual.getSlicerState()
+	     *  .then(state => { ... });
+	     * ```
+	     *
+	     * @returns {(Promise<models.ISlicerState>)}
+	     */
+	    VisualDescriptor.prototype.getSlicerState = function () {
+	        return this.page.report.service.hpm.get("/report/pages/" + this.page.name + "/visuals/" + this.name + "/slicer", { uid: this.page.report.config.uniqueId }, this.page.report.iframe.contentWindow)
 	            .then(function (response) { return response.body; }, function (response) {
 	            throw response.body;
 	        });
@@ -4137,7 +4424,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	            datasetId: config.datasetId || this.getId(),
 	            accessToken: config.accessToken,
 	            tokenType: config.tokenType,
-	            settings: settings
+	            settings: settings,
+	            groupId: config.groupId
 	        };
 	    };
 	    /**
@@ -4598,7 +4886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ (function(module, exports) {
 
 	var config = {
-	    version: '2.5.0',
+	    version: '2.6.0',
 	    type: 'js'
 	};
 	Object.defineProperty(exports, "__esModule", { value: true });

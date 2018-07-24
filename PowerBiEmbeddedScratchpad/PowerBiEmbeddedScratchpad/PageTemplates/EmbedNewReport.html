@@ -33,14 +33,16 @@
       tokenType: models.TokenType.Embed,
     };
 
-    console.log(config);
-
     // Get a reference to the embedded report HTML element
     var embedContainer = document.getElementById('embedContainer');
 
     // Embed the report and display it within the div container.
     var report = powerbi.createReport(embedContainer, config);    
     
+    // Display Report object in browser console window
+    console.log(report);
+
+
 
     $(function () {
       var widthBuffer = 12;

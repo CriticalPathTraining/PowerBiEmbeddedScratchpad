@@ -29,9 +29,8 @@ namespace PowerBiEmbeddedScratchpad.Models {
     private static string reportId = ConfigurationManager.AppSettings["report-id"];
     private static string dashboardId = ConfigurationManager.AppSettings["dashboard-id"];
 
-
-    private static string reportWithRlsId = ConfigurationManager.AppSettings["rls-dashboard-id"];
-    private static string datasetWithRlsId = ConfigurationManager.AppSettings["rls-report-id"];
+    private static string datasetWithRlsId = ConfigurationManager.AppSettings["rls-dataset-id"];
+    private static string reportWithRlsId = ConfigurationManager.AppSettings["rls-report-id"];
 
     private static string GetAccessToken2() {
 
@@ -98,26 +97,6 @@ namespace PowerBiEmbeddedScratchpad.Models {
 
     #endregion
 
-    public static ReportEmbeddingData GetReportEmbeddingData() {
-
-      PowerBIClient pbiClient = GetPowerBiClient();
-
-      var report = pbiClient.Reports.GetReportInGroup(workspaceId, reportId);
-      var embedUrl = report.EmbedUrl;
-      var reportName = report.Name;
-
-      GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
-      string embedToken = pbiClient.Reports.GenerateTokenInGroup(workspaceId, report.Id, generateTokenRequestParameters).Token;
-
-      return new ReportEmbeddingData {
-        reportId = reportId,
-        reportName = reportName,
-        embedUrl = embedUrl,
-        accessToken = embedToken
-      };
-
-    }
-
     public static ReportEmbeddingData GetReportEmbeddingDataFirstParty() {
 
       PowerBIClient pbiClient = GetPowerBiClient();
@@ -126,7 +105,6 @@ namespace PowerBiEmbeddedScratchpad.Models {
       var embedUrl = report.EmbedUrl;
       var reportName = report.Name;
       var accessToken = GetAccessToken();
-
 
       return new ReportEmbeddingData {
         reportId = reportId,
@@ -137,27 +115,27 @@ namespace PowerBiEmbeddedScratchpad.Models {
 
     }
 
-    public static NewReportEmbeddingData GetNewReportEmbeddingData() {
-
-      string embedUrl = "https://app.powerbi.com/reportEmbed?groupId=" + workspaceId;
+    public static ReportEmbeddingData GetReportEmbeddingData() {
 
       PowerBIClient pbiClient = GetPowerBiClient();
 
-      GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "create", datasetId: datasetId);
-      string embedToken = pbiClient.Reports.GenerateTokenForCreateInGroup(workspaceId, generateTokenRequestParameters).Token;
+      var report = pbiClient.Reports.GetReportInGroup(workspaceId, reportId);
+      var embedUrl = report.EmbedUrl;
+      var reportName = report.Name;
 
-      return new NewReportEmbeddingData { workspaceId = workspaceId, datasetId = datasetId, embedUrl = embedUrl, accessToken = embedToken };
-    }
+      // create token request object
+      GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
 
-    public static NewReportEmbeddingData GetNewReportEmbeddingDataFirstParty() {
+      // call to Power BI Service API and pass GenerateTokenRequest object to generate embed token
+      string embedToken = pbiClient.Reports.GenerateTokenInGroup(workspaceId,
+                                                                 report.Id,
+                                                                 generateTokenRequestParameters).Token;
 
-      string embedUrl = "https://app.powerbi.com/reportEmbed?groupId=" + workspaceId;
-
-      return new NewReportEmbeddingData {
-        workspaceId = workspaceId,
-        datasetId = datasetId,
+      return new ReportEmbeddingData {
+        reportId = reportId,
+        reportName = reportName,
         embedUrl = embedUrl,
-        accessToken = GetAccessToken()
+        accessToken = embedToken
       };
 
     }
@@ -171,7 +149,9 @@ namespace PowerBiEmbeddedScratchpad.Models {
       var dashboardDisplayName = dashboard.DisplayName;
 
       GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
-      string embedToken = pbiClient.Dashboards.GenerateTokenInGroup(workspaceId, dashboardId, generateTokenRequestParameters).Token;
+      string embedToken = pbiClient.Dashboards.GenerateTokenInGroup(workspaceId, 
+                                                                    dashboardId, 
+                                                                    generateTokenRequestParameters).Token;
 
       return new DashboardEmbeddingData {
         dashboardId = dashboardId,
@@ -187,13 +167,18 @@ namespace PowerBiEmbeddedScratchpad.Models {
       PowerBIClient pbiClient = GetPowerBiClient();
 
       var tiles = pbiClient.Dashboards.GetTilesInGroup(workspaceId, dashboardId).Value;
-      var tile = tiles[0];
+
+      // retrieve first tile in tiles connection
+      var tile = tiles[0]; 
       var tileId = tile.Id;
       var tileTitle = tile.Title;
       var embedUrl = tile.EmbedUrl;
 
       GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
-      string embedToken = pbiClient.Tiles.GenerateTokenInGroup(workspaceId, dashboardId, tileId, generateTokenRequestParameters).Token;
+      string embedToken = pbiClient.Tiles.GenerateTokenInGroup(workspaceId, 
+                                                               dashboardId, 
+                                                               tileId, 
+                                                               generateTokenRequestParameters).Token;
 
       return new DashboardTileEmbeddingData {
         dashboardId = dashboardId,
@@ -201,6 +186,40 @@ namespace PowerBiEmbeddedScratchpad.Models {
         TileTitle = tileTitle,
         embedUrl = embedUrl,
         accessToken = embedToken
+      };
+
+    }
+
+    public static NewReportEmbeddingData GetNewReportEmbeddingData() {
+
+      string embedUrl = "https://app.powerbi.com/reportEmbed?groupId=" + workspaceId;
+
+      PowerBIClient pbiClient = GetPowerBiClient();
+
+      GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "create", 
+                                                                                     datasetId: datasetId);
+
+      string embedToken = pbiClient.Reports.GenerateTokenForCreateInGroup(workspaceId, 
+                                                                          generateTokenRequestParameters).Token;
+
+      return new NewReportEmbeddingData {
+        workspaceId = workspaceId,
+        datasetId = datasetId,
+        embedUrl = embedUrl,
+        accessToken = embedToken
+      };
+
+    }
+
+    public static NewReportEmbeddingData GetNewReportEmbeddingDataFirstParty() {
+
+      string embedUrl = "https://app.powerbi.com/reportEmbed?groupId=" + workspaceId;
+
+      return new NewReportEmbeddingData {
+        workspaceId = workspaceId,
+        datasetId = datasetId,
+        embedUrl = embedUrl,
+        accessToken = GetAccessToken()
       };
 
     }
@@ -215,7 +234,10 @@ namespace PowerBiEmbeddedScratchpad.Models {
       string datasetID = dataset.Id;
 
       GenerateTokenRequest generateTokenRequestParameters = new GenerateTokenRequest(accessLevel: "view");
-      string embedToken = pbiClient.Datasets.GenerateTokenInGroup(workspaceId, dataset.Id, generateTokenRequestParameters).Token;
+
+      string embedToken = pbiClient.Datasets.GenerateTokenInGroup(workspaceId, 
+                                                                  dataset.Id, 
+                                                                  generateTokenRequestParameters).Token;
 
       return new QnaEmbeddingData {
         datasetId = datasetId,
@@ -226,6 +248,8 @@ namespace PowerBiEmbeddedScratchpad.Models {
     }
 
     public static ReportWithRlsEmbeddingData GetReportWithRlsEmbeddingData() {
+
+      var userName = "grumpy.mcfly@toolate4u.com";
 
       PowerBIClient pbiClient = GetPowerBiClient();
 
@@ -239,29 +263,31 @@ namespace PowerBiEmbeddedScratchpad.Models {
       GenerateTokenRequest tokenRequestAllData =
         new GenerateTokenRequest(accessLevel: "view",
                                 identities: new List<EffectiveIdentity> {
-                                  new EffectiveIdentity(username:"User1",
+                                  new EffectiveIdentity(username: userName,
                                                         datasets: new List<string> { datasetWithRlsId },
-                                                        roles: new List<string> { "AllData" })
+                                                        roles: new List<string> { "All Sales Regions" })
                                 });
 
 
       string embedTokenAllData = pbiClient.Reports.GenerateTokenInGroup(workspaceId, reportWithRlsId, tokenRequestAllData).Token;
 
-      Console.WriteLine("Got 1");
-      EffectiveIdentity identityWesternSales = new EffectiveIdentity(username: "Bob", roles: new List<string> { "WesternSales" }, datasets: new List<string> { datasetWithRlsId });
+      EffectiveIdentity identityWesternSales = new EffectiveIdentity(username: userName, roles: new List<string> { "Western Sales Region" }, datasets: new List<string> { datasetWithRlsId });
       GenerateTokenRequest tokenRequestWesternSales = new GenerateTokenRequest("view", null, identities: new List<EffectiveIdentity> { identityWesternSales });
       string embedTokenWesternSales = pbiClient.Reports.GenerateTokenInGroup(workspaceId, report.Id, tokenRequestWesternSales).Token;
 
-      Console.WriteLine("Got 2");
-      EffectiveIdentity identityCentralSales = new EffectiveIdentity(username: "Bob", roles: new List<string> { "CentralSales" }, datasets: new List<string> { datasetWithRlsId });
+      EffectiveIdentity identityCentralSales = new EffectiveIdentity(username: userName, roles: new List<string> { "Central Sales Region" }, datasets: new List<string> { datasetWithRlsId });
       GenerateTokenRequest tokenRequestCentralSales = new GenerateTokenRequest(accessLevel: "view", datasetId: datasetId, identities: new List<EffectiveIdentity> { identityCentralSales });
       string embedTokenCentralSales = pbiClient.Reports.GenerateTokenInGroup(workspaceId, report.Id, tokenRequestCentralSales).Token;
 
-      Console.WriteLine("Got 3");
-      EffectiveIdentity identityEasternSales = new EffectiveIdentity("Bob", roles: new List<string> { "EasternSales" }, datasets: new List<string> { datasetWithRlsId });
+      EffectiveIdentity identityEasternSales = new EffectiveIdentity(userName, roles: new List<string> { "Eastern Sales Region" }, datasets: new List<string> { datasetWithRlsId });
       GenerateTokenRequest tokenRequestEasternSales = new GenerateTokenRequest(accessLevel: "view", datasetId: datasetId, identities: new List<EffectiveIdentity> { identityEasternSales });
       string embedTokenEasternSales = pbiClient.Reports.GenerateTokenInGroup(workspaceId, report.Id, tokenRequestEasternSales).Token;
-      Console.WriteLine("Got 4");
+
+
+      EffectiveIdentity identityCombo = new EffectiveIdentity(userName, roles: new List<string> { "Central Sales Region", "Eastern Sales Region" }, datasets: new List<string> { datasetWithRlsId });
+      GenerateTokenRequest tokenRequestCombo = new GenerateTokenRequest(accessLevel: "view", datasetId: datasetId, identities: new List<EffectiveIdentity> { identityCombo });
+      string embedTokenCombo = pbiClient.Reports.GenerateTokenInGroup(workspaceId, report.Id, tokenRequestCombo).Token;
+
 
       return new ReportWithRlsEmbeddingData {
         reportId = report.Id,
@@ -270,7 +296,8 @@ namespace PowerBiEmbeddedScratchpad.Models {
         embedTokenAllData = embedTokenAllData,
         embedTokenWesternSales = embedTokenWesternSales,
         embedTokenCentralSales = embedTokenCentralSales,
-        embedTokenEasternSales = embedTokenEasternSales
+        embedTokenEasternSales = embedTokenEasternSales,
+        embedTokenCombo = embedTokenCombo
       };
 
     }

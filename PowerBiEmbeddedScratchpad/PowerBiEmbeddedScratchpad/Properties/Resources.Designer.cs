@@ -78,6 +78,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///  }
         ///
         ///#leftnav {
+        ///  float: left;
+        ///  width: 240px;
         ///  background-color: white;
         ///  padding: 0px;
         ///  border: solid 1px #333;
@@ -92,13 +94,11 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///  font-size: 24px;
         ///}
         ///
-        ///#leftnav ul {
-        ///  margin-top: 0;
-        ///  padding: 4px;
-        ///}
-        ///
-        ///  #leftnav li {
-        ///    margin: 8 [rest of string was truncated]&quot;;.
+        ///  #leftnav h4 {
+        ///    margin: 0;
+        ///    padding: 4px;
+        ///    padding-bottom: 2px;
+        ///    padding [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string app_css {
             get {
@@ -138,7 +138,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///    // data required for embedding Power BI report
         ///    var embedDashboardId = &quot;@EmbedDashboardId&quot;;
-        ///    [rest of string was truncated]&quot;;.
+        ///    var embedUrl = &quot;@Emb [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedDashboard_html {
             get {
@@ -168,7 +168,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///    // data required for embedding Power BI report
         ///    var embedDashboardId = &quot;@EmbedDashboardId&quot;;
-        ///    [rest of string was truncated]&quot;;.
+        ///    var embedTileId = &quot;@ [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedDashboardTile_html {
             get {
@@ -197,19 +197,17 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///  &lt;script&gt;
         ///
         ///    // Get data required for embedding
-        ///    var embedW [rest of string was truncated]&quot;;.
+        ///    var embedWorkspaceId= &quot;@EmbedW [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string EmbedNewReport_FirstParty_html {
+        internal static string EmbedNewReport_html {
             get {
-                return ResourceManager.GetString("EmbedNewReport_FirstParty_html", resourceCulture);
+                return ResourceManager.GetString("EmbedNewReport_html", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
-        ///
         ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-        ///
         ///&lt;head&gt;
         ///  &lt;meta charset=&quot;utf-8&quot; /&gt;
         ///  &lt;title&gt;@AppName&lt;/title&gt;
@@ -218,19 +216,14 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///  &lt;script src=&quot;scripts/jquery.js&quot;&gt;&lt;/script&gt;
         ///  &lt;script src=&quot;scripts/powerbi.js&quot;&gt;&lt;/script&gt;
         ///&lt;/head&gt;
-        ///
         ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
         ///
-        ///  &lt;div id=&quot;embedContainer&quot; /&gt;
-        ///
-        ///  &lt;script&gt;
-        ///
-        ///    // Get data required for embedding
-        ///    var embedW [rest of string was truncated]&quot;;.
+        ///  &lt;div id=&quot;toolbar&quot; hidden&gt;
+        ///    &lt;button type=&quot;button&quot; id=&quot;toggleEdit&quot; style=&quot;font-size:14px&quot;&gt;Toggle Edit M [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string EmbedNewReport_html {
+        internal static string EmbedNewReportWithSaveAsRedirect_html {
             get {
-                return ResourceManager.GetString("EmbedNewReport_html", resourceCulture);
+                return ResourceManager.GetString("EmbedNewReportWithSaveAsRedirect_html", resourceCulture);
             }
         }
         
@@ -255,7 +248,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///  &lt;script&gt;
         ///
         ///    // Get data required for embedding
-        ///    var datase [rest of string was truncated]&quot;;.
+        ///    var datasetId = &quot;@DatasetId&quot;;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedQna_html {
             get {
@@ -285,7 +279,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///    // data required for embedding Power BI report
         ///    var embedReportId = &quot;@EmbedReportId&quot;;
-        ///    var e [rest of string was truncated]&quot;;.
+        ///    var embedUrl = &quot;@EmbedUrl&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReport_html {
             get {
@@ -315,11 +309,55 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///    // data required for embedding Power BI report
         ///    var embedReportId = &quot;@EmbedReportId&quot;;
-        ///    var e [rest of string was truncated]&quot;;.
+        ///    var embedUrl = &quot;@EmbedUrl&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportVisual_html {
             get {
                 return ResourceManager.GetString("EmbedReportVisual_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///  &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///  &lt;title&gt;Navigating with Bookmarks&lt;/title&gt;
+        ///  &lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
+        ///  &lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
+        ///  &lt;script src=&quot;scripts/jquery.js&quot;&gt;&lt;/script&gt;
+        ///  &lt;script src=&quot;scripts/powerbi.js&quot;&gt;&lt;/script&gt;
+        ///&lt;/head&gt;
+        ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
+        ///  &lt;div id=&quot;leftnav&quot; style=&quot;float:left; width:240px;&quot;&gt;
+        ///    &lt;h3&gt;Bookmarks&lt;/h3&gt;
+        ///    &lt;div id=&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EmbedReportWithBookmarkCarousel_html {
+            get {
+                return ResourceManager.GetString("EmbedReportWithBookmarkCarousel_html", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
+        ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        ///&lt;head&gt;
+        ///  &lt;meta charset=&quot;utf-8&quot; /&gt;
+        ///  &lt;title&gt;Navigating with Bookmarks&lt;/title&gt;
+        ///  &lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
+        ///  &lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
+        ///  &lt;script src=&quot;scripts/jquery.js&quot;&gt;&lt;/script&gt;
+        ///  &lt;script src=&quot;scripts/powerbi.js&quot;&gt;&lt;/script&gt;
+        ///&lt;/head&gt;
+        ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
+        ///  &lt;div id=&quot;leftnav&quot; style=&quot;float:left; width:240px;&quot;&gt;
+        ///    &lt;h3&gt;Bookmarks&lt;/h3&gt;
+        ///    &lt;div id=&quot; [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string EmbedReportWithBookmarks_html {
+            get {
+                return ResourceManager.GetString("EmbedReportWithBookmarks_html", resourceCulture);
             }
         }
         
@@ -330,24 +368,29 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///&lt;head&gt;
         ///  &lt;meta charset=&quot;utf-8&quot; /&gt;
-        ///  &lt;title&gt;Navigating with Bookmarks&lt;/title&gt;
+        ///  &lt;title&gt;@AppName&lt;/title&gt;
         ///  &lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
         ///  &lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
         ///  &lt;script src=&quot;scripts/jquery.js&quot;&gt;&lt;/script&gt;
         ///  &lt;script src=&quot;scripts/powerbi.js&quot;&gt;&lt;/script&gt;
+        ///
+        ///  &lt;style&gt;
+        ///    #embedContainer iframe { background-color: white; }
+        ///  &lt;/style&gt;
+        ///
         ///&lt;/head&gt;
         ///
-        ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
+        ///&lt;body&gt;
         ///
-        ///  &lt;div id=&quot;leftnav&quot; style=&quot;float:left; width:240px;&quot;&gt;
+        ///  &lt;div id=&quot;embedContainer&quot; /&gt;
         ///
-        ///    &lt;h3&gt;Bookmarks&lt;/h3&gt;
+        ///  &lt;script&gt;
         ///
-        ///  [rest of string was truncated]&quot;;.
+        ///    // data required [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string EmbedReportWithBookmarks_html {
+        internal static string EmbedReportWithConfigurationOptions_html {
             get {
-                return ResourceManager.GetString("EmbedReportWithBookmarks_html", resourceCulture);
+                return ResourceManager.GetString("EmbedReportWithConfigurationOptions_html", resourceCulture);
             }
         }
         
@@ -371,7 +414,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///  &lt;script&gt;
         ///
-        ///    // data required for embedding Power BI  [rest of string was truncated]&quot;;.
+        ///    // data required for embedding Power BI report
+        ///    var embe [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithContextMenus_html {
             get {
@@ -386,7 +430,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///&lt;head&gt;
         ///  &lt;meta charset=&quot;utf-8&quot; /&gt;
-        ///  &lt;title&gt;@AppName&lt;/title&gt;
+        ///  &lt;title&gt;Custom Filtering Demo&lt;/title&gt;
         ///  &lt;link rel=&quot;icon&quot; href=&quot;favicon.ico&quot; type=&quot;image/x-icon&quot; /&gt;
         ///  &lt;link href=&quot;css/app.css&quot; rel=&quot;stylesheet&quot; /&gt;
         ///  &lt;script src=&quot;scripts/jquery.js&quot;&gt;&lt;/script&gt;
@@ -395,11 +439,11 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
         ///
-        ///  &lt;div id=&quot;leftnav&quot; style=&quot;float:left; width:240px;&quot;&gt;
+        ///  &lt;div id=&quot;leftnav&quot; style=&quot;float:left;&quot; &gt;
         ///
-        ///    &lt;h3&gt;Page Navigation&lt;/h3&gt;
+        ///    &lt;h3&gt;Custom Filtering &lt;/h3&gt;
         ///
-        ///    &lt;div id= [rest of string was truncated]&quot;;.
+        ///    &lt;div id=&quot;loading&quot; hidden [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithCustomFiltering_html {
             get {
@@ -429,7 +473,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///    // data required for embedding Power BI report
         ///    var embedReportId = &quot;@EmbedReportId&quot;;
-        ///    var e [rest of string was truncated]&quot;;.
+        ///    var embedUrl = &quot;@EmbedUrl&quot; [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithFirstPartyToken_html {
             get {
@@ -439,9 +483,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;!DOCTYPE html&gt;
-        ///
         ///&lt;html lang=&quot;en&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
-        ///
         ///&lt;head&gt;
         ///  &lt;meta charset=&quot;utf-8&quot; /&gt;
         ///  &lt;title&gt;@AppName&lt;/title&gt;
@@ -450,14 +492,11 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///  &lt;script src=&quot;scripts/jquery.js&quot;&gt;&lt;/script&gt;
         ///  &lt;script src=&quot;scripts/powerbi.js&quot;&gt;&lt;/script&gt;
         ///&lt;/head&gt;
-        ///
         ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
-        ///
         ///  &lt;div id=&quot;leftnav&quot; style=&quot;float:left; width:240px;&quot;&gt;
-        ///
         ///    &lt;h3&gt;Page Navigation&lt;/h3&gt;
-        ///
-        ///    &lt;div id= [rest of string was truncated]&quot;;.
+        ///    &lt;div id=&quot;loading&quot;&gt;
+        /// [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithPageNavigation_html {
             get {
@@ -488,7 +527,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///    // preload preload pbie scripts on this page
         ///    var preloadConfig = {
-        ///      ty [rest of string was truncated]&quot;;.
+        ///      type: &apos;report&apos;,
+        ///      ba [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithPhasedLoading_html {
             get {
@@ -513,7 +553,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
         ///
         ///  &lt;div id=&quot;toolbar&quot;&gt;
-        ///    &lt;button type=&quot;button&quot; id=&quot;toggleEdit&quot; style=&quot;font-size:14px&quot; &gt;Toggle Edit M [rest of string was truncated]&quot;;.
+        ///    &lt;button type=&quot;button&quot; id=&quot;toggleEdit&quot; style=&quot;font-size:14px&quot; &gt;Toggle Edit Mode&lt;/button&gt;
+        ///    [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithRLS_html {
             get {
@@ -538,7 +579,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///&lt;body style=&quot;margin:0;padding:0;background-color:#EEE;&quot;&gt;
         ///
         ///  &lt;div id=&quot;toolbar&quot;&gt;
-        ///    &lt;button type=&quot;button&quot; id=&quot;toggleEdit&quot; style=&quot;font-size:14px&quot;&gt;Toggle Edit Mo [rest of string was truncated]&quot;;.
+        ///    &lt;button type=&quot;button&quot; id=&quot;toggleEdit&quot; style=&quot;font-size:14px&quot;&gt;Toggle Edit Mode&lt;/button&gt;
+        ///     [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string EmbedReportWithToolbar_html {
             get {
@@ -616,7 +658,7 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to /*! powerbi-client v2.5.0 | (c) 2016 Microsoft Corporation MIT */
+        ///   Looks up a localized string similar to /*! powerbi-client v2.6.0 | (c) 2016 Microsoft Corporation MIT */
         ///(function webpackUniversalModuleDefinition(root, factory) {
         ///	if(typeof exports === &apos;object&apos; &amp;&amp; typeof module === &apos;object&apos;)
         ///		module.exports = factory();
@@ -654,7 +696,8 @@ namespace PowerBiEmbeddedScratchpad.Properties {
         ///
         ///  &lt;div id=&quot;output-display&quot; style=&quot;float:right; width:400px; overflow: auto;&quot;&gt;&lt;/div&gt;
         ///
-        ///  &lt;div id=&quot;embedContainerContainer&quot; style=&quot;margin-right: [rest of string was truncated]&quot;;.
+        ///  &lt;div id=&quot;embedContainerContainer&quot; style=&quot;margin-right:400px&quot;&gt;
+        ///    &lt;div  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string ReportInspector_html {
             get {

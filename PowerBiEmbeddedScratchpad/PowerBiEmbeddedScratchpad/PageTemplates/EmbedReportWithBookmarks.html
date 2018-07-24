@@ -1,7 +1,5 @@
 ﻿<!DOCTYPE html>
-
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
-
 <head>
   <meta charset="utf-8" />
   <title>Navigating with Bookmarks</title>
@@ -10,25 +8,17 @@
   <script src="scripts/jquery.js"></script>
   <script src="scripts/powerbi.js"></script>
 </head>
-
 <body style="margin:0;padding:0;background-color:#EEE;">
-
   <div id="leftnav" style="float:left; width:240px;">
-
     <h3>Bookmarks</h3>
-
     <div id="loading">
       <img title="Loading..." src="css/img/loading.gif" style="width:80px;margin-top:36px;margin-left:72px;" />
     </div>
-
     <div id="leftnav-menu">
       <ul id="page-navigation"></ul>
     </div>
-
   </div>
-
   <div id="embedContainer" style="margin-left: 260px;" />
-
   <script>
 
     // data required for embedding Power BI report
@@ -68,34 +58,55 @@
     var currentBookmark;
 
     report.on('loaded', function () {
-      $("#loading").hide();      
+
+      $("#loading").hide();
+      // diplay BookmarksManager in console
       console.log(report.bookmarksManager);
-      bookmarksManager = report.bookmarksManager;
+
+      // determine whether you want to show bookmarks pane on right
+      report.updateSettings({ bookmarksPaneEnabled: false });
+
+      // Uncomment the following line to start report in bookmark play mode
+      // report.bookmarksManager.play(models.BookmarksPlayMode.Presentation);
+
       report.bookmarksManager.getBookmarks().then(
-        function (reportBookmarks) {
-          bookmarks = reportBookmarks;
-          loadBookmarks(bookmarks);
-        });
+        function (bookmarks) {
+          loadBookmarksNavigation(bookmarks);
+        });      
     });
 
-    var loadBookmarks = function (bookmarks) {
-      console.log(bookmarks);
-      report.bookmarksManager.play();
+    var loadBookmarksNavigation = function (bookmarks) {
+
+      // display bookmarks in browser console
+      console.log("Bookmarks", bookmarks)
+
       var pageNavigation = $("#page-navigation");
       pageNavigation.empty();
 
       for (var index = 0; index < bookmarks.length; index++) {
+        // get name for each book mark
         var bookmarkDisplayName = bookmarks[index].displayName;
+        // use jQuery create a navigation link for each page
         pageNavigation.append($("<li>")
           .append($('<a href="javascript:;" >')
-            .text(bookmarks[index].displayName))
+          .text(bookmarks[index].displayName))
           .click(function (domEvent) {
+            // get text from link to get bookmark display name
             var bookmarkDisplayName = domEvent.target.textContent ? domEvent.target.textContent : domEvent.target.firstChild.textContent;
-            var bookmark = bookmarks.find((bookmark) => { return bookmark.displayName === bookmarkDisplayName });
-            report.bookmarksManager.apply(bookmark.name);
+            // get target bookmark from bookmarks collection
+            var targetBookmark = bookmarks.find(function (bookmark) { return bookmark.displayName === bookmarkDisplayName; });
+            // apply bookmakr to report
+            report.bookmarksManager.apply(targetBookmark.name);
           }));
       }
     }
+
+    report.on("bookmarkApplied", (event) => {
+      console.log("Bookmark Applied", event.detail);
+    });
+
+  
+
 
 
     $(function () {
@@ -114,6 +125,5 @@
 
 
   </script>
-
 </body>
 </html>

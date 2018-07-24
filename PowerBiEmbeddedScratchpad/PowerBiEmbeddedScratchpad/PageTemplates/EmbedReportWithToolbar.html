@@ -51,8 +51,13 @@
     // Embed the report and display it within the div container.
     var report = powerbi.embed(reportContainer, config);
 
+    // Display Report object in browser console window
+    console.log(report);
+
+    // add variable to track current display mode
     var viewMode = "view";
 
+    // command handler to toggle display mode
     $("#toggleEdit").click(function () {
 
       viewMode = (viewMode == "view") ? "edit" : "view";
@@ -65,21 +70,15 @@
 
     });
 
-
-
+    // command handler to enter full screen mode
     $("#fullScreen").click(function () {
       report.fullscreen();
     });
 
+    // command handler to print report
     $("#print").click(function () {
       report.print();
     });
-
-
-    report.on("commandTriggered", function (command) {
-      console.log(command);
-    });
-
 
 
 

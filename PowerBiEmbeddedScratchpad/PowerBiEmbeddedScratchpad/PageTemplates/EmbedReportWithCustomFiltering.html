@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>Custom Filtering Demo</title>
+  <title>@AppName</title>
   <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link href="css/app.css" rel="stylesheet" />
   <script src="scripts/jquery.js"></script>
@@ -35,7 +35,6 @@
         <input id="filter-east-coast" type="button" value="East Coast States" />
         <input id="remove-all-filters" type="button" value="Remove All Filters" />
       </div>
-
     
     </div>
 
@@ -88,7 +87,7 @@
       console.log("Report loaded");
 
       report.getFilters().then(function (filters) {
-       // console.log(filters);
+       console.log(filters);
       });
 
       $("#filter-west-coast").click(function () {
@@ -111,7 +110,7 @@
     });
 
     var selectStates = function (states) {
-      console.log(states);
+
       $("#state-picker input").each(function () {
         var state = $(this).prop('id');
         var selectState = (states.indexOf(state) > -1);
@@ -123,7 +122,6 @@
 
 
     var unselectAllStates = function () {
-      console.log("Hi");
 
       $("#state-picker input:checked").each(function () {
         $(this).prop('checked', false);
@@ -167,6 +165,10 @@
           values: states
         }
 
+        // display filter in browser console
+        console.log("Applied Filter", basicStateFilter);
+
+        // apply filter to report
         report.setFilters([basicStateFilter]);
       }
       else {

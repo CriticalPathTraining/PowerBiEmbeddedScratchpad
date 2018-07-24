@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <title>Navigating with Bookmarks</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+<body style="margin:0;padding:0;background-color:#EEE;">
+  <div id="leftnav" style="float:left; width:240px;">
+    <h3>Bookmarks</h3>
+    <div id="loading">
+      <img title="Loading..." src="css/img/loading.gif" style="width:80px;margin-top:36px;margin-left:72px;" />
+    </div>
+    <div id="leftnav-menu">
+      <ul id="page-navigation"></ul>
+    </div>
+  </div>
+  <div id="embedContainer" style="margin-left: 260px;" />
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEAB2Wtc7GDJaD7-Vvs1KYVpoizPwGuzAzZ7T3vt9M7-Y88rH973_s9B3mtPjnf_-xC6_y1EkL1lTVis-e3Dcw-zgMx8L7jmt6NIdDopmPBtW-O35mGk9VDOl8zkfEFVa5YOq46P4Q-zl7YKoSZ3yB-4uFAhsHk4Kot2Ya3IuViEI9iLXdyxcRzva1SB3bzBS6I7sCtrQY2521-qNRtR7YYWM1NiOjuSH_CJpAQRTxUUYg2Tr2ZTUAt43qvlVtZCw_d-HNTzTO-VCBOnDovHfWkdDKaJtVtRMAtcCQiCBonHueMRIhxs3ESD-ZcUQtj8CBOaxfgp0vMSjWOumXfz-r8Pj5NXT10HHYthuXhCLWPha3PomHFFg4T7i272ijd3iTJXMEe7YEY_Xy8t1-tD-OR_sjDcyxkxPll9Yi0RuNtmPj175b2O0qvCY2PzfSWmtx31-RW9UX5-NKKoAlxPyekXad3zHtxvI-2OzSiSJEbJcRjrWdd1wpS5qczXmt8t9hO98REJZ5K_SIKW20RddwbC9EI6-Vg2yiwsd3lPi5RrLQ36s7s7xNRexWCfeClPjIrYewgVra3zLNWCDoHp82-rz03kCnZin9kCOsEuYtXTVo41m96crhuntdqYdFVsjz5aJH2LR1RQqm60G4OcOHdUviVOsOHX4YqRofE_qV2EM-GcMUcSNRFUXP8HNbRZf8wODudazsQUeKabDksSUh17QfcsueSBv7DD-JaeKgkcRI1lfrf4trKGBmMms9kvVxCl6kFGgRnfothsg4pBywnPf6uMIZ5jDsxaPBXNTnPoLogZDWJ4pSj0iJ4eFB9JQB7iBIBEqW63WvO_Q30ChjP6tv4eLPQHmubnD6peE_22r5qj7py-VemjtAwtjvgVQ7OVvZBBx5081f8O2NwP1ACtfYZTImqz2_ITq8kIjfxnuG6xvNSdEWL1pwSFWC9Tg6lzo0UFKC4PMJaeXWWLCx68LoX0-gk-E3kmryjcVQR3Vqt_t7znpBLUe88RYOmEbB972wF5HkKiY_Y7pVMRm0AviW4Rlt7pezs8pfFirXG3KQSEeXim0Vck0izIgikzu_A1rIvcv1FelJ9HGkuDydCngK8sZOhUrbY_DV6nsBT9uJwW1u-2QeIL0EB86LoB4JPqWw8u2ZE3sB0_rnG3jY1Q1I9-WQrs9IiWXmEYkF2bFeFRvKg2_nZnxuP-XuDdGVKIil55786OSzCJFSvW3wWV3C_mqNE3nU3Cuf0TKXZ5_o1wrZ6TVEmH9XDD2kwbIUyqNkOhvHKmO0pEodFN9uerMPHrH0X76QB1xqvA7yB1wcQ5LUPwQ1lA81TVCZeM3VNaVsi1s5_QXx0JcMW2QX4u5ubAJN3jrlBzHoGaWdseJ-f1qirnkX7Pj5fgnCLpwHhDUqQ96JnaLqXjhkCy9jWfBm0O_EQ12z8A0vqwJ6wtP4pEQ5_BDTH3I5Zle8UlMoaurfmTz8anxWdVn1wkdvvAHArhP0C4H84n7NpNAtIsMwhTFpgr27d0Tk6_sjrZQeMn3U3TKi0sTiLdpjXPAU6ZOGyenHqpX2QpNLK6lhPQfogBes9UsNm7wUiUU9zOjkRlA4-xmZuldGnOtX6u919bOUlTX0uk-L-Ur9dMhB1AwdwqU3LXXxVF400iEG6Pupa-Vu61-AKXIP4gUZT_qyaLG2IIv_o9y7rN1ufPs4K3ZWa-ZwOg4GZJpmhQhqd9Ng2bjE9OcXrTcnu4aOVB_R8wncA0lxV0KLObLaLWdJLH8uAZLeHbh-81mykguRKpFuYDxosPrqd8vi3E-SVDZa_xboGfp73tIJbQlh5RlnoMEpwHadCwfVJL42olkxWOJSKPmP6v8waqHUSFrZ_k43gsDBNvRyg6VzpL8ptCLB26th-ADZ6c5gM--ZawUZENhOpgeWGRNr_IPdQRUF2KMm85GXta26bPt-JAwcC0GQnIhcAFJaBWcPGp8gqZAdUjAWOVA5CzcahO5bYaaP0hy_oEYCaIZSp4n8hQ4GjXqzAk3_pTKmefPN84QlzBk-vN3umKx9O-zO0LoCb6I31LN_pw5Jb6R5hjiIv4sRNJPMyI9FOwCzAOi6_YU4EFOLk7a7RnBWrMRmpfHrIY4JRw79tw-4QUmSwxULcoJ5dyvxRll_jbA8sSNF7KMm9LaINfJXZdF9w2LFZ-KoZ1UN18hHklBVvY_ZZcegWTuIvszYoz_MEdG1jKF3wApiGH_oKNju_r65vA758mf1WA_YZUciFXQ8rxyZ_pPjC_r5QadxSzJI2-gTyb6IQUToJtrWNhVphr-SAfnP__zDbe9yzFr5_s2ZJI_rM4Eik-Eub4EQKOmM3XA1ERPMKBSY42lw6ASAdbzDTPaZzL0ZMi-BClCx0BtdeHrda5sJ_2JAyTYsXBcXI648MNCM5GxrA1pwfpJcia5ivsUaKpIocVYpqoizF4BGeRt1T1_Rsz2Rcdo27yTkJIP5NUx-lk3yMIw427Sf9nO-racKYelvmkziSFuTQngCiFydnEyHog5yfIEle62TKI4w-MSOul9w2umZLhro5QQRzhjHeoRVf133XTp9hcx2-NpbLOouoopRDf0AKelC1Dp4jAOQtwqdodoUzyxvdMbZDCQx4xtxpj2Hf1h2xIciUGCE00cJdYriaPg32UP5ffW__vUfzO_SlJsS_FG-bz5jj9VBIMAs6NnFeQHb7_-qvLae0uPcyj_Z6cMW9F5AbXSbwY5KP3ewwSGr5tA-SCE-bLh9H71685nVZzy29rNduztkL1HmhpRqzXPypfApYn3iMWDQbje9dKnQChLJysiQohAGTucgPQGnj1uoVQVBTGPRKlbw1292GMBV5QBxSFMYNQ_UFBtrO9XxtjixHBGJFjAU-udpo4qKfv8RlF3EWmxhdGUCqwVKPtZdxN9CQdwRjhbetrnBfQrm3Vn7lKKmcc-oEYYeAySUAfZfuvJYdWyeX5C3HDpT9sdONETkbTsYTt_RwGSCcP10uBMF_xo0BHqWOZsVkbGLhcv-2iMhIy6YxsCLagsy56ZnhPxkqC-QKcPtsZk6uZ0_zP_3_yAwOQ3CCwAA";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: false,
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(embedContainer, config);
+
+
+
+    $("#loading").show();
+
+    var bookmarks;
+    var bookmarksManager;
+    var currentBookmark;
+
+    report.on('loaded', function () {
+
+      $("#loading").hide();
+      // diplay BookmarksManager in console
+      console.log(report.bookmarksManager);
+
+      // determine whether you want to show bookmarks pane on right
+      report.updateSettings({ bookmarksPaneEnabled: false });
+
+      // Uncomment the following line to start report in bookmark play mode
+      // report.bookmarksManager.play(models.BookmarksPlayMode.Presentation);
+
+      report.bookmarksManager.getBookmarks().then(
+        function (bookmarks) {
+          loadBookmarksNavigation(bookmarks);
+        });      
+    });
+
+    var loadBookmarksNavigation = function (bookmarks) {
+
+      // display bookmarks in browser console
+      console.log("Bookmarks", bookmarks)
+
+      var pageNavigation = $("#page-navigation");
+      pageNavigation.empty();
+
+      for (var index = 0; index < bookmarks.length; index++) {
+        // get name for each book mark
+        var bookmarkDisplayName = bookmarks[index].displayName;
+        // use jQuery create a navigation link for each page
+        pageNavigation.append($("<li>")
+          .append($('<a href="javascript:;" >')
+          .text(bookmarks[index].displayName))
+          .click(function (domEvent) {
+            // get text from link to get bookmark display name
+            var bookmarkDisplayName = domEvent.target.textContent ? domEvent.target.textContent : domEvent.target.firstChild.textContent;
+            // get target bookmark from bookmarks collection
+            var targetBookmark = bookmarks.find(function (bookmark) { return bookmark.displayName === bookmarkDisplayName; });
+            // apply bookmakr to report
+            report.bookmarksManager.apply(targetBookmark.name);
+          }));
+      }
+    }
+
+    report.on("bookmarkApplied", (event) => {
+      console.log("Bookmark Applied", event.detail);
+    });
+
+  
+
+
+
+    $(function () {
+      var widthBuffer = 272;
+      var heightBuffer = 18;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+
+
+  </script>
+</body>
+</html>

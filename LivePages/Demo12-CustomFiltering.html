@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Demo12: Custom Filtering</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon" />
+  <link href="css/app.css" rel="stylesheet" />
+  <script src="scripts/jquery.js"></script>
+  <script src="scripts/powerbi.js"></script>
+</head>
+
+<body style="margin:0;padding:0;background-color:#EEE;">
+
+  <div id="leftnav" style="float:left;" >
+
+    <h3>Custom Filtering </h3>
+
+    <div id="loading" hidden >
+      <img title="Loading..." src="css/img/loading.gif" />
+    </div>
+
+    <div id="leftnav-menu" hidden>
+   
+      <h4>SELECT STATES TO FILTER</h4>
+
+      <div id="state-picker"></div>
+
+      <h4>APPLY PRESET FILTERS</h4>
+
+      <div id="filter-buttons" >
+        <input id="filter-west-coast" type="button" value="West Coast States" />
+        <input id="filter-gulf-coast" type="button" value="Gulf Coast States" />
+        <input id="filter-east-coast" type="button" value="East Coast States" />
+        <input id="remove-all-filters" type="button" value="Remove All Filters" />
+      </div>
+    
+    </div>
+
+  </div>
+
+  <div id="embedContainer" style="margin-left: 260px;" ></div>
+
+  <script>
+
+    // data required for embedding Power BI report
+    var embedReportId = "ba274ba0-93be-4e53-af65-fdc8a559c557";
+    var embedUrl = "https://app.powerbi.com/reportEmbed?reportId=ba274ba0-93be-4e53-af65-fdc8a559c557&groupId=7f4576c7-039a-472f-b998-546a572d5da2";
+    var accessToken = "H4sIAAAAAAAEACWWxQ7sWBJE_-VtPZKZRuqFmZm9M5WZqezW_PuUuve5iBs3T0T-_cfOnmHOyj___UNYqqjWrmzRHNIxeMsCFspeAHjs9eCb1ogscJjt-muVnE8SmpKnbj4xfCNgLW2xbowJPnqiX4U4hMqv9mJbZc2MtNnbjuHDN4Y7Fp3hIkHJhV8bpVWMpE9Jz7X8eNllllLrLlosueqHdwnrNeBTcCg101b-s7tix3nsGB6xdU_xSBHoCXBsUC77BSRCgjXdM0cwxuFf5jJQSbvZlk2Ic3YKeRwAziHvtX2ibxV0iCMwusvwOazx1tTOfMtxMoFuBcFCsI-DUevWwsJcrQp85fjT8crVco05z7vSEis6JASanmu1tkzTeVxDZ5iwbsmdsH30IXigZ8S6wgUc1tS19RXmaHcyTSdQZyZuwYiPrFAQtgQhYI0SwildcKTGBQ_ih_zK19XvdA-tS6kQE1srHtVXixyc1AY_VL1ADwqNilczU7fPxYI7mZEKd8EyC8ldxBzKyaTGcEU7pL54HcYj1U8bw0cxCADhlmRT3Zg-oe9GTovSB_b757ZHBitrNMndfR6xFAUpgQtv5QJTxxcC0Y8ffmpWTr6Ru3XieGE58Qo9mIgYi28cTPnwqvSe8cWIG3nIfh6qhpJfcFE9QNBdOSWqY503diZdU0LLVdMwXyU-VjeqSctZPPprFMxqT_Kevg8LZ07hkYztlFcm5Mr5zEdCEuICoG7i55nZLhUFgx_kt1SMYYOd9r6iYO0HmM8ElutWcw9utdJFfwisxgPPSCjKOL6GfJSSfEKNTA7thIZTI3KwNluKS3YONiUyhwc04vaLRMbMR72mN4zNfTMZ-txFzAXEArPjVSEyyJIHhcJZ61udt09XguGXEufwAVmxOLvjl6zGX18JhiMlCs-dV7zBdDskPvoA03vzTqsiBYNX6M25ocvhZ5-Nlihc5hwYpvmXl38y2F7HWnS-ZQgjJpt_nwEwz_5aKzifs3EEt36G-MyJqWgYIFo6Je1U7QevPKFT0FGFKuk7M2mDlLZMEj-nubgTwInMC7UV3ExgfOiUSzBqKp8vAs646Gim0tVA-ZJcR_2nSAIFpwsYeqaOCSdnD2IN1EEQzRlTDdwQA0rGfAvvgGotS68XxutD8hATuo6A3yu7WhDl0xwR52VMUwFn22aKgKHAt7unr-P7ZXqsXsDCPzxPYbZXd22voK31mhiRj-r3Pv9dmwG6JRIOow_pab3tRSJUg_o3_5DYPevCA0GZUksJljtlZuklAekeMldl-NWH8n64djlD50dtUhMY0DFthzRcEpekiSfU4oyXnL6tlTqJTCWSFdA0k2hD5yr9gPPMUvNf8S7ChtMVdXnVknrsZSsT0JdaVSDAMk0el_-AYBKx1Ic_4pafaRKDCwDeIR2mYFefjTrq1MS4MjuguA0I50lFwe75DFcTn8TVvGkk-u1M85OCKou37veyvbKs2GF36DinjPQ60OL4cb5ifZufA5LbUoelsHJfAof5W2I0zIhLQjlVIffQRu4UG4muwqBsun2yMfoew1h11vTtwuEyOcbIDLF611jvoj1iCoLbeRPDzkplSL44u3bBZ3SAJLvnG5auT1n9qSnK8xDzU1uvbVwC2TIacJ_7Nulz_EY9iXyNo8JyTBdQsf5lXK6s3VtvtIYQkbr451F-FcpHlXWbuVW6NaoKhOlKjPYU7zQchTY7TQ3JTl8ike6398PdhRvX2q1ANxBpi6nkpxHAG3BDnKcR-5ST9XckFoIHZJpzSFjstzUK5imL3Uvla0o04QySauiUlEC4Kq9M6tXgxW7_-lMcXukI3NiIfVAR3PjvCPHa8usHjLP9ClrglE3aCGZX4XjH5MEzdhAV-dHNCt-opjX76ElncvuYZi2VVNLz3_CX_JQmYUxjaMWrF5bxkUTGtUBN66Lax-1TMJWCU5LUkR7Qirxd5PaiKDv4V1jbBTxrMVBxdFnY5_zxrs2G9CHBkaU3OmdAOhXoMrUq4RnsJvXcFtY9z-gGY2dmpKl2Ai4DclMTWiHjeljtvaAqKfLPluEnG162EwwekbmoMKcDiZD25UfWCx1Xg3qzCchhpbjx3DQI2dt8YmsBUmulK5Q1sVtlRH-zxcIoEPcIMNU02S3ODCd5DVuQ6vajYC7Vy2BlAzC7hsqfYESlWeoR8cYSPqfdpa2JHKdBYtbJn1avnprY_yyiEH7jMo20TmAlgQ4fgYswv6XTJ6dsrkqJOTmvX_Fddc5Pn-Qrd25KN1vzyLOLHjlWvKchA2Ni5VpS3HzGC6F9VEST2MvafIHbVNoQjJSBocWFv-1zw3L0x8LGXCOMZId7rjn8FReEqRB6YJLo_uvPf_5w27Mcs1Y9v9MnctUIn6fd9qNvvYPfYdtX0HmcPjWOtDhLmibO-AtiUNxboMWGtWm4eAPdJlsBhJp54maKl2pu3NiHYN3jK-08AyPiQ7w4EA6AhihHoW9nC7aeTxhshHPMF3sbAx-UqeKQ5QzOgQlBQB9LUh8M1gDtgEgZlZRc9uiJhHefoJ5pFxuot9ilvPSxqVplAvOzFjyeZqQy5a5-M5wxd7MUbOiu41c74UB8hn6-gGmpDYCM0u-AfqE757ncnUb9HCRKecDOwqft4jVfj4H1eSCyKQWClbo0JceoMBu4IgEAP3-N0MY4pdoZRMDMuY8vB0nWxZAoWcgvjONT3LmCgaSixM3-SN9__WPzszTVpoQ_lysz1NPg0qVFGrPuB-vQG_G_U15bT9lxbtVvzOPVIfMBsiI2e-VNJTK8CjT1HrOiSEEJusEH7uUItPdM3uSs1lKpxxULaOrEbzhZUv3ZTXWnGFYSy7BbGZSFEaQC-NqRU9c_owRartWj5HIxLqfCMrECaHhjqWnoJ_LjKC0TonTLGVEWvfzNTlWLZcIR5RlJRnLYOe7bRGkMEAkk4mxJY_TZLCJ3CiUKuNo3pI-5Stnfr9hZ6GBeVb63ZE6Q27UKok4INJbWjvZRj1LDS5BE3cjZYavv1ebHKcm3jQ4dv1zX9Msz2jzyGwVHyth6kz7czsHnXvdSwJX8Ky44i6fLENNCluhuqfmw1-I1GFm6PMMRAxddXfXNJBLVrk9a_2z-3_8BV2353O4LAAA=";
+
+    // Get models object to access enums for embed configuration
+    var models = window['powerbi-client'].models;
+
+    var config = {
+      type: 'report',
+      id: embedReportId,
+      embedUrl: embedUrl,
+      accessToken: accessToken,
+      tokenType: models.TokenType.Embed,
+      permissions: models.Permissions.All,
+      viewMode: models.ViewMode.View,
+      settings: {
+        filterPaneEnabled: false,
+        navContentPaneEnabled: false,
+      }
+    };
+
+    // Get a reference to the embedded report HTML element
+    var embedContainer = document.getElementById('embedContainer');
+
+    // Embed the report and display it within the div container.
+    var report = powerbi.embed(embedContainer, config);
+
+    $("#loading").show();
+
+    report.on('loaded', function () {
+
+      populateStatePicker();
+
+      $("#state-picker input").click(setStateFilter);
+
+
+      $("#loading").hide();
+      $("#leftnav-menu").show();
+
+      console.log("Report loaded");
+
+      report.getFilters().then(function (filters) {
+       console.log(filters);
+      });
+
+      $("#filter-west-coast").click(function () {
+        selectStates(["CA", "OR", "WA"]);
+      });
+
+
+      $("#filter-gulf-coast").click(function () {
+        selectStates(["AL", "FL", "LA", "MS", "TX"]);
+      });
+
+
+      $("#filter-east-coast").click(function () {
+        selectStates(["CT", "DE", "FL", "GA", "ME", "NC", "NH", "NJ", "NY", "RI", "SC", "VA"]);
+      });
+
+      $("#remove-all-filters").click(unselectAllStates);
+
+
+    });
+
+    var selectStates = function (states) {
+
+      $("#state-picker input").each(function () {
+        var state = $(this).prop('id');
+        var selectState = (states.indexOf(state) > -1);
+        $(this).prop('checked', selectState);
+      });
+
+      setStateFilter();
+    }
+
+
+    var unselectAllStates = function () {
+
+      $("#state-picker input:checked").each(function () {
+        $(this).prop('checked', false);
+      });
+
+      setStateFilter();
+    }
+
+    var populateStatePicker = function () {
+
+      var states = ['AK', 'AL', 'AR', 'AZ', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'IA', 'ID', 'IL', 'IN', 'KS', 'KY', 'LA', 'MA', 'MD', 'ME', 'MI', 'MN', 'MO', 'MS', 'MT', 'NC', 'ND', 'NE', 'NH', 'NJ', 'NM', 'NV', 'NY', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VA', 'VT', 'WA', 'WI', 'WV', 'WY'];
+
+      $("#state-picker").empty();
+
+      for (var index = 0; index < states.length; index++) {
+        var state = states[index];
+        $("#state-picker")
+          .append($("<div>", { class: "state-container" })
+            .append($("<input>", { id: state, name: state, type: "checkbox", class: "state-checkbox" }))
+            .append($("<label>", { for: state, class: "state-label" }).text(state))
+          );
+      }
+    }
+
+    var setStateFilter = function () {
+
+      var states = [];
+      $("#state-picker input:checked").each(function () {
+        states.push($(this).attr("name"));
+      });
+
+      if (states.length > 0) {
+
+        const basicStateFilter = {
+          $schema: "http://powerbi.com/product/schema#basic",
+          target: {
+            table: "Customers",
+            column: "State"
+          },
+          operator: "In",
+          values: states
+        }
+
+        // display filter in browser console
+        console.log("Applied Filter", basicStateFilter);
+
+        // apply filter to report
+        report.setFilters([basicStateFilter]);
+      }
+      else {
+        report.removeFilters();
+      }
+
+    };
+
+    
+    $(function () {
+      var widthBuffer = 264;
+      var heightBuffer = 18;
+      $("#embedContainer").width($(window).width() - widthBuffer);
+      $("#embedContainer").height($(window).height() - heightBuffer);
+      $("#leftnav").height($(window).height() - heightBuffer);
+      $(window).resize(function () {
+        $("#embedContainer").width($(window).width() - widthBuffer);
+        $("#embedContainer").height($(window).height() - (heightBuffer));
+        $("#leftnav").height($(window).height() - heightBuffer);
+      });
+    });
+
+
+  </script>
+
+</body>
+</html>
